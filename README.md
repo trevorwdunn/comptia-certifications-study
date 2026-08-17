@@ -13,7 +13,7 @@ coming-soon.
 
 | Certification | Exam | Questions | Flashcards | Study topics |
 |---|---|---:|---:|---:|
-| A+ | 220-1201 / 220-1202 | 56 | 52 | 22 |
+| A+ | 220-1201 / 220-1202 | 155 | 52 | 22 |
 | Network+ | N10-009 | 62 | 62 | 24 |
 | Security+ | SY0-701 | 60 | 75 | 37 |
 | Server+ | SK0-005 | 65 | 62 | 40 |
@@ -60,9 +60,31 @@ end of its options array, duplicate IDs, questions assigned to a domain that doe
 exist, and missing helper exports. A question with a bad `correct` index looks completely
 normal and simply marks everyone wrong.
 
+## Importing from Core 1 Bench
+
+A+ carries 99 multiple-choice questions imported from a standalone Core 1 practice exam;
+they keep a `sourceId` field holding their original bank id. The A+ progress page also
+accepts that app's `A1.…` progress codes, decoded in `src/lib/core1Import.js`.
+
+Decoding depends on the bank order hardcoded in that file matching the source app's
+question order exactly, because the code is positional — two characters per question, no
+ids. A code from a bank of a different size is rejected outright, but a bank that was
+*reordered* without changing size would decode into silently wrong questions.
+
 ## Deployment
 
-Cloudflare Pages builds on every push to `main`:
+The Pages project is a **direct upload**, not connected to this repository, so
+pushing to `main` does not deploy anything. Build and upload explicitly:
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name=comptia-certifications-study
+```
+
+Connecting the repo in the dashboard would swap this for build-on-push; nothing in
+the code depends on which one is in use.
+
+Either way the project needs:
 
 - Build command `npm run build`, output directory `dist`
 - D1 binding named `DB` (the binding name is referenced directly by the API functions)
