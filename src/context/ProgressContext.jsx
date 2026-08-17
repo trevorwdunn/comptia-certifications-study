@@ -35,6 +35,9 @@ export function ProgressProvider({ children }) {
   }, [user])
 
   const saveQuiz      = useCallback((payload) => update((p) => recordQuizAttempt(p, payload)), [update])
+  // One state write and one sync for a whole set of attempts, so an import of
+  // several domains doesn't fire a request per domain.
+  const saveQuizBatch = useCallback((payloads) => update((p) => payloads.reduce(recordQuizAttempt, p)), [update])
   const saveFlashcard = useCallback((certId, flashcardId, status) => update((p) => recordFlashcard(p, { certId, flashcardId, status })), [update])
   const visitTopic    = useCallback((certId, topicId) => update((p) => recordTopicVisit(p, { certId, topicId })), [update])
   const completeTopic = useCallback((certId, topicId, completed = true) => update((p) => markTopicComplete(p, { certId, topicId, completed })), [update])
@@ -49,7 +52,7 @@ export function ProgressProvider({ children }) {
   }, [update])
 
   return (
-    <ProgressContext.Provider value={{ progress, activeCerts, toggleActiveCert, saveQuiz, saveFlashcard, visitTopic, completeTopic }}>
+    <ProgressContext.Provider value={{ progress, activeCerts, toggleActiveCert, saveQuiz, saveQuizBatch, saveFlashcard, visitTopic, completeTopic }}>
       {children}
     </ProgressContext.Provider>
   )

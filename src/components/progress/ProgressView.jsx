@@ -3,6 +3,7 @@ import { getCert, CERT_COLORS } from '../../certs'
 import { useCertData } from '../../data/index'
 import Loading from '../Loading'
 import { useProgress } from '../../context/ProgressContext'
+import Core1Import from './Core1Import'
 
 function Bar({ pct, color }) {
   const c = CERT_COLORS[color] || CERT_COLORS.blue
@@ -124,6 +125,8 @@ export default function ProgressView() {
           })}
         </div>
       </div>
+
+      {certId === 'a-plus' && <Core1Import certId={certId} domains={data.domains} />}
     </div>
   )
 }
