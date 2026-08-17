@@ -157,7 +157,7 @@ export default function Layout() {
       </aside>
 
       <main className="lg:ml-56">
-        <div className={`max-w-4xl mx-auto px-4 sm:px-6 pt-20 lg:pt-8 pb-8 ${cert ? 'pb-24 lg:pb-8' : ''}`}>
+        <div className={`max-w-4xl mx-auto px-4 sm:px-6 pt-20 lg:pt-8 ${cert ? 'pb-tabbar' : 'pb-8'}`}>
           <Outlet />
         </div>
       </main>
@@ -166,7 +166,10 @@ export default function Layout() {
       {cert && c && (
         <nav
           className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-slate-900 border-t border-slate-800 flex"
-          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+          style={{
+            height: 'calc(var(--tabbar-h) + env(safe-area-inset-bottom))',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+          }}
         >
           {certNavItems.map(({ sub, label, icon, end }) => (
             <NavLink

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  :root { --tabbar-h: 3.5rem; }
   body { @apply bg-slate-950 text-slate-100 min-h-screen; }
   * { @apply box-border; }
 }
@@ -14,6 +15,13 @@
   .btn-ghost { @apply hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-2 rounded-lg transition-colors duration-150; }
   .input { @apply bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-full; }
   .badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium; }
+
+  /* Clears the fixed mobile tab bar plus the iOS home indicator. Derived from
+     --tabbar-h, which the bar itself is sized by, so the two cannot drift apart.
+     A plain `pb-24` here would be silently overridden: Tailwind emits .pb-8 after
+     .pb-24, so the two classes together resolve to 2rem, not 6rem. */
+  .pb-tabbar { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 1.5rem); }
+  @screen lg { .pb-tabbar { padding-bottom: 2rem; } }
 }
 
 .flip-card { perspective: 1000px; }
