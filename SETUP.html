@@ -88,58 +88,45 @@
 secret — reaching it still requires your Cloudflare account credentials — so it's fine in a
 public repo.</p>
 
-<h2><span class="n">3</span>Connect Pages to the repo <span class="tag you">you</span></h2>
-<p>This one has no API I can drive — Pages project creation and the GitHub authorization
-handshake are dashboard-only.</p>
-<p><b>Workers &amp; Pages &rarr; Create &rarr; Pages &rarr; Connect to Git</b>, then pick the repo you just pushed.</p>
-<table>
-  <tr><th>Setting</th><th>Value</th></tr>
-  <tr><td>Framework preset</td><td>Vite</td></tr>
-  <tr><td>Build command</td><td><code>npm run build</code></td></tr>
-  <tr><td>Build output directory</td><td><code>dist</code></td></tr>
-  <tr><td>Production branch</td><td><code>main</code></td></tr>
-</table>
-<p>Leave the root directory blank. The <code>functions/</code> folder is picked up automatically — that's what serves <code>/api/*</code>.</p>
+<h2><span class="n">3</span>Create the Pages project <span class="tag done">done</span></h2>
+<p>Done from the CLI rather than the dashboard, so the project is a <b>direct upload</b> and
+is <em>not</em> connected to GitHub. Pushing to <code>main</code> deploys nothing on its own.</p>
+<pre><code>npx wrangler pages project create comptia-certifications-study --production-branch main</code></pre>
+<p>To publish a change, build and upload:</p>
+<pre><code>npm run build
+npx wrangler pages deploy dist --project-name=comptia-certifications-study</code></pre>
+<p>Live at <a href="https://comptia-certifications-study.pages.dev">comptia-certifications-study.pages.dev</a>.
+If you'd rather have build-on-push, connect the repo under <b>Settings &rarr; Builds &amp; deployments</b>;
+nothing in the code cares which mode is used.</p>
 
-<h2><span class="n">4</span>Bind the database and set variables <span class="tag you">you</span></h2>
-<p>After the first build, go to the project's <b>Settings</b>. Apply these to the
-<b>Production</b> environment (and Preview too, if you want previews to work).</p>
-
-<h3>D1 database binding</h3>
-<table>
-  <tr><th>Variable name</th><th>D1 database</th></tr>
-  <tr><td><code>DB</code></td><td><code>certifications-db</code></td></tr>
-</table>
-<p>The binding name must be exactly <code>DB</code> — that's what the API functions reference.</p>
-
-<h3>Environment variables</h3>
-<table>
-  <tr><th>Name</th><th>Value</th><th>Notes</th></tr>
-  <tr>
-    <td><code>JWT_SECRET</code></td>
-    <td>a long random string</td>
-    <td>Mark it <b>encrypted</b>. Generate one with the command below. Changing it later signs everyone out.</td>
-  </tr>
-  <tr>
-    <td><code>MAX_ACCOUNTS</code></td>
-    <td><code>10</code></td>
-    <td>Optional. Registration is refused past this many users. Defaults to 10 if unset.</td>
-  </tr>
-</table>
-<pre><code>node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"</code></pre>
+<h2><span class="n">4</span>Bind the database and set variables <span class="tag done">done</span></h2>
+<p>The <code>DB</code> binding comes from <code>wrangler.toml</code> and is applied on every
+<code>pages deploy</code>, so there is nothing to click. The binding name must stay exactly
+<code>DB</code> — that's what the API functions reference.</p>
+<p><code>JWT_SECRET</code> is set as an encrypted secret. It was generated and piped straight
+into Wrangler so the value was never printed, written to a file, or shown in the transcript:</p>
+<pre><code>node -e "process.stdout.write(require('crypto').randomBytes(48).toString('base64url'))" | npx wrangler pages secret put JWT_SECRET --project-name=comptia-certifications-study</code></pre>
+<p>Nobody has a copy of that value, which is fine — it is never needed again. Replacing it is
+the same command, and doing so signs everyone out.</p>
+<p><code>MAX_ACCOUNTS</code> is <b>not</b> set, so the code's default of 10 applies. Set it in the
+dashboard under <b>Settings &rarr; Variables</b> only if you want a different cap.</p>
 <div class="warn">
-  <b>Redeploy after setting these.</b> Cloudflare only applies new bindings and variables
-  to <em>new</em> builds. Until you redeploy, sign-up and sign-in will fail.
+  <b>Redeploy after changing any of these.</b> Cloudflare only applies bindings and variables
+  to <em>new</em> deployments.
 </div>
+<p>Verified working: a sign-in attempt with a nonexistent account returns
+<code>401 Invalid credentials</code> rather than a 500, which means the request reached D1.</p>
 
-<h2><span class="n">5</span>Point the domain at it</h2>
+<h2><span class="n">5</span>Point the domain at it <span class="tag you">you</span></h2>
+<p>Wrangler 4.x has no <code>pages domain</code> command, so this step is dashboard-only.</p>
 <p>In the Pages project: <b>Custom domains &rarr; Set up a custom domain</b>, and enter:</p>
 <pre><code>certifications.trevorwdunn.us</code></pre>
 <p>Since <code>trevorwdunn.us</code> is already on Cloudflare, the CNAME is created for you and
 the certificate issues within a few minutes.</p>
 
-<h2><span class="n">6</span>Create the three accounts</h2>
+<h2><span class="n">6</span>Create the three accounts <span class="tag you">you</span></h2>
 <p>Visit the site and register Trevor, Jack, and Billy through the normal sign-up form.
+Nothing has registered yet, so all 10 slots are free.
 Use the same email addresses that have Gravatars attached, since avatars are derived from a
 hash of the email — no images are stored anywhere.</p>
 <div class="note">
