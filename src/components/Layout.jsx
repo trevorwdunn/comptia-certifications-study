@@ -1,0 +1,190 @@
+import { useEffect, useState } from 'react'
+import { Outlet, NavLink, Link, useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { CERTS, CERT_COLORS, getCert } from '../certs'
+import Avatar from './Avatar'
+
+const certNavItems = [
+  { sub: '',           label: 'Overview',   icon: '⊞', end: true },
+  { sub: '/quiz',      label: 'Quiz',       icon: '✦' },
+  { sub: '/flashcards',label: 'Cards',      icon: '⟐' },
+  { sub: '/study',     label: 'Study',      icon: '≡' },
+  { sub: '/progress',  label: 'Progress',   icon: '◑' },
+]
+
+export default function Layout() {
+  const { certId } = useParams()
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const cert = certId ? getCert(certId) : null
+  const c = cert ? CERT_COLORS[cert.color] : null
+
+  useEffect(() => { setMenuOpen(false) }, [location.pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  return (
+    <div className="min-h-screen">
+      {/* Mobile top bar */}
+      <header className="lg:hidden fixed top-0 inset-x-0 h-14 bg-slate-900 border-b border-slate-800 z-30 flex items-center gap-3 px-3">
+        <button
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
+          className="w-10 h-10 -ml-1 flex items-center justify-center rounded-lg text-slate-300 hover:bg-slate-800 text-xl"
+        >
+          ☰
+        </button>
+        <Link to="/" className="flex items-center gap-2 min-w-0">
+          {cert && c ? (
+            <>
+              <div className={`w-7 h-7 ${c.bg} rounded-lg flex items-center justify-center text-xs font-bold text-white shrink-0`}>{cert.badge}</div>
+              <span className="font-semibold text-sm truncate">{cert.name}</span>
+            </>
+          ) : (
+            <>
+              <div className="w-7 h-7 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center text-xs font-bold shrink-0">CT</div>
+              <span className="font-semibold text-sm truncate">CompTIA Study</span>
+            </>
+          )}
+        </Link>
+        <div className="ml-auto shrink-0">
+          {user
+            ? <Avatar email={user.email} name={user.email.split('@')[0]} size={30} />
+            : <Link to="/login" className="text-xs btn-primary py-1.5 px-3">Sign in</Link>}
+        </div>
+      </header>
+
+      {menuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/60 z-40"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 lg:w-56 bg-slate-900 border-r border-slate-800 flex flex-col
+          transform transition-transform duration-200 lg:translate-x-0
+          ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <div className="px-4 py-4 border-b border-slate-800 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 group min-w-0">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center text-xs font-bold shrink-0">CT</div>
+            <div className="min-w-0">
+              <div className="font-bold text-sm leading-tight group-hover:text-white text-slate-200">CompTIA Study</div>
+              <div className="text-xs text-slate-500 truncate">certifications.trevorwdunn.us</div>
+            </div>
+          </Link>
+          <button
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+            className="lg:hidden w-8 h-8 shrink-0 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800"
+          >
+            ✕
+          </button>
+        </div>
+
+        {cert && c && (
+          <div className="px-2 py-3 border-b border-slate-800">
+            <div className={`flex items-center gap-2 px-2 py-1.5 rounded-lg ${c.dim} mb-2`}>
+              <div className={`w-6 h-6 ${c.bg} rounded flex items-center justify-center text-xs font-bold text-white shrink-0`}>{cert.badge}</div>
+              <div className="min-w-0">
+                <div className={`text-xs font-semibold ${c.text} truncate`}>{cert.name}</div>
+                <div className="text-xs text-slate-600 truncate">{cert.code}</div>
+              </div>
+            </div>
+            <nav className="space-y-0.5">
+              {certNavItems.map(({ sub, label, icon, end }) => (
+                <NavLink
+                  key={sub}
+                  to={`/${certId}${sub}`}
+                  end={end}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2.5 px-3 py-2.5 lg:py-2 rounded-lg text-sm lg:text-xs font-medium transition-colors ${
+                      isActive ? `${c.dim} ${c.text}` : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800'
+                    }`
+                  }
+                >
+                  <span className="text-sm">{icon}</span>{label}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+        )}
+
+        <div className="px-2 py-3 flex-1 overflow-auto">
+          <div className="text-xs font-semibold text-slate-600 uppercase tracking-wider px-2 mb-2">Certifications</div>
+          <nav className="space-y-0.5">
+            {CERTS.map((cc) => {
+              const cl = CERT_COLORS[cc.color]
+              const isActive = certId === cc.id
+              return (
+                <Link
+                  key={cc.id}
+                  to={`/${cc.id}`}
+                  className={`flex items-center gap-2.5 px-2 py-2.5 lg:py-2 rounded-lg text-sm lg:text-xs transition-colors ${
+                    isActive ? `${cl.dim} ${cl.text} font-semibold` : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800'
+                  }`}
+                >
+                  <div className={`w-5 h-5 ${isActive ? cl.bg : 'bg-slate-700'} rounded flex items-center justify-center text-xs font-bold text-white shrink-0`}>{cc.badge}</div>
+                  {cc.name}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+
+        <div className="px-3 py-3 border-t border-slate-800">
+          {user ? (
+            <>
+              <div className="flex items-center gap-2 px-2 mb-1.5 min-w-0">
+                <Avatar email={user.email} name={user.email.split('@')[0]} size={28} />
+                <div className="text-xs text-slate-400 truncate">{user.email.split('@')[0]}</div>
+              </div>
+              <button onClick={() => { logout(); navigate('/') }} className="btn-ghost text-xs w-full text-left text-slate-400 py-1.5">
+                Sign out
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="btn-primary text-xs block text-center py-2">Sign in to save progress</Link>
+          )}
+        </div>
+      </aside>
+
+      <main className="lg:ml-56">
+        <div className={`max-w-4xl mx-auto px-4 sm:px-6 pt-20 lg:pt-8 pb-8 ${cert ? 'pb-24 lg:pb-8' : ''}`}>
+          <Outlet />
+        </div>
+      </main>
+
+      {/* Mobile bottom tabs — only while inside a cert */}
+      {cert && c && (
+        <nav
+          className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-slate-900 border-t border-slate-800 flex"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+        >
+          {certNavItems.map(({ sub, label, icon, end }) => (
+            <NavLink
+              key={sub}
+              to={`/${certId}${sub}`}
+              end={end}
+              className={({ isActive }) =>
+                `flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-medium transition-colors ${
+                  isActive ? c.text : 'text-slate-500'
+                }`
+              }
+            >
+              <span className="text-base leading-none">{icon}</span>
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+      )}
+    </div>
+  )
+}
