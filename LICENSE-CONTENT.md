@@ -10,8 +10,10 @@ Summary: https://creativecommons.org/licenses/by-sa/4.0/
 In short, you may share and adapt this material, including commercially, provided you
 give appropriate credit and license your derivatives under the same terms.
 
-The software in this repository is covered by the MIT license instead — see `LICENSE`.
-Software licenses fit source code; they fit prose poorly, which is why the two are split.
+Everything else in this repository — all source code — is covered by the MIT license in
+`LICENSE`. Software licenses fit source code; they fit prose poorly, which is why the two
+are split. `LICENSE` is left as the unmodified MIT text so GitHub's license detection
+still recognizes it.
 
 ## Provenance
 
