@@ -19,6 +19,10 @@ async function gravatarUrl(email, px) {
   return url
 }
 
+function hashedUrl(hash, px) {
+  return `https://gravatar.com/avatar/${hash}?s=${px * 2}&d=identicon`
+}
+
 const PALETTE = ['bg-blue-600', 'bg-emerald-600', 'bg-violet-600', 'bg-amber-600', 'bg-rose-600', 'bg-teal-600']
 
 function initialsFor(name) {
@@ -26,16 +30,23 @@ function initialsFor(name) {
   return ((parts[0]?.[0] ?? '?') + (parts[1]?.[0] ?? '')).toUpperCase()
 }
 
-export default function Avatar({ email, name, size = 36, className = '' }) {
-  const [url, setUrl] = useState(() => urlCache.get(`${email}|${size}`) ?? null)
+// `hash` is the Gravatar hash computed server-side. Everyone other than the
+// signed-in user is rendered from it, so other people's email addresses never
+// have to reach the browser at all.
+export default function Avatar({ email, hash, name, size = 36, className = '' }) {
+  const [url, setUrl] = useState(() =>
+    hash ? hashedUrl(hash, size) : urlCache.get(`${email}|${size}`) ?? null
+  )
   const [failed, setFailed] = useState(false)
 
   useEffect(() => {
+    setFailed(false)
+    if (hash) { setUrl(hashedUrl(hash, size)); return }
     if (!email || !crypto?.subtle) return
     let alive = true
     gravatarUrl(email, size).then((u) => alive && setUrl(u)).catch(() => {})
     return () => { alive = false }
-  }, [email, size])
+  }, [email, hash, size])
 
   const label = name || email || '?'
   const tint = PALETTE[[...label].reduce((n, ch) => n + ch.charCodeAt(0), 0) % PALETTE.length]

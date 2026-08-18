@@ -6,6 +6,7 @@ export default function Register() {
   const { register } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
@@ -16,8 +17,12 @@ export default function Register() {
     setError('')
     if (password !== confirm) { setError('Passwords do not match'); return }
     if (password.length < 8) { setError('Password must be at least 8 characters'); return }
+    if (!/^[a-z0-9_]{3,20}$/.test(username.trim().toLowerCase())) {
+      setError('Username must be 3-20 characters: lowercase letters, numbers, or underscores')
+      return
+    }
     setLoading(true)
-    try { await register(email, password); navigate('/') }
+    try { await register(email, password, username.trim().toLowerCase()); navigate('/') }
     catch (err) { setError(err.message || 'Registration failed') }
     finally { setLoading(false) }
   }
@@ -35,6 +40,11 @@ export default function Register() {
             <div>
               <label htmlFor="register-email" className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
               <input id="register-email" name="email" type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus autoComplete="username" />
+            </div>
+            <div>
+              <label htmlFor="register-username" className="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+              <input id="register-username" name="username" type="text" className="input" placeholder="how you'll show up on the leaderboard" value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="nickname" maxLength={20} />
+              <p className="text-xs text-slate-500 mt-1">Lowercase letters, numbers and underscores. Others find you by this — never your email.</p>
             </div>
             <div>
               <label htmlFor="register-password" className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>

@@ -18,10 +18,23 @@ async function request(path, options = {}) {
 
 export const api = {
   auth: {
-    register: (email, password) =>
-      request('/auth/register', { method: 'POST', body: JSON.stringify({ email, password }) }),
+    register: (email, password, username) =>
+      request('/auth/register', { method: 'POST', body: JSON.stringify({ email, password, username }) }),
     login: (email, password) =>
       request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  },
+  me: {
+    get: () => request('/me'),
+    setUsername: (username) => request('/me', { method: 'PATCH', body: JSON.stringify({ username }) }),
+  },
+  users: {
+    search: (q) => request(`/users/search?q=${encodeURIComponent(q)}`),
+  },
+  friends: {
+    list: () => request('/friends'),
+    add: (username) => request('/friends', { method: 'POST', body: JSON.stringify({ username }) }),
+    accept: (id) => request(`/friends/${id}`, { method: 'PATCH' }),
+    remove: (id) => request(`/friends/${id}`, { method: 'DELETE' }),
   },
   progress: {
     get: () => request('/progress'),

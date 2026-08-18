@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Account from './components/Account'
+import Friends from './components/Friends'
 import CertDashboard from './components/CertDashboard'
 import QuizMenu from './components/quiz/QuizMenu'
 import QuizSession from './components/quiz/QuizSession'
@@ -26,6 +27,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="account" element={<Account />} />
+              <Route path="friends" element={<Friends />} />
               <Route path=":certId" element={<CertDashboard />} />
               <Route path=":certId/quiz" element={<QuizMenu />} />
               <Route path=":certId/quiz/:domainId" element={<QuizSession />} />

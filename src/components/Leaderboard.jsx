@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth, displayNameOf } from '../context/AuthContext'
 import { useProgress } from '../context/ProgressContext'
 import { getCertStats } from '../lib/storage'
 import { CERT_COLORS, getCert } from '../certs'
 import Avatar from './Avatar'
 
-// Fetches all users' progress summaries for a cert (or all certs if no certId)
-async function fetchLeaderboard(certId) {
+// Fetches progress summaries for a cert (or all certs if no certId), across
+// either everyone or just the people you've added as friends.
+async function fetchLeaderboard(certId, scope) {
   const token = localStorage.getItem('cstudy_token')
   if (!token) return null
-  const url = certId ? `/api/leaderboard?cert=${certId}` : '/api/leaderboard'
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+  const params = new URLSearchParams()
+  if (certId) params.set('cert', certId)
+  if (scope === 'friends') params.set('scope', 'friends')
+  const qs = params.toString()
+  const res = await fetch(`/api/leaderboard${qs ? `?${qs}` : ''}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
   if (!res.ok) return null
   return res.json()
 }
@@ -27,28 +33,30 @@ export default function Leaderboard({ certId }) {
   const { progress } = useProgress()
   const [board, setBoard] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [scope, setScope] = useState('all')
 
   useEffect(() => {
     if (!user) return
     setLoading(true)
-    fetchLeaderboard(certId).then(setBoard).finally(() => setLoading(false))
-  }, [user, certId])
+    fetchLeaderboard(certId, scope).then(setBoard).finally(() => setLoading(false))
+  }, [user, certId, scope])
 
   // Build local entry for the current user (always show even if not logged in)
   const localEntry = (() => {
     if (!certId) return null
     const stats = getCertStats(progress, certId)
     return {
-      email: user?.email ?? null,
-      displayName: user ? user.email.split('@')[0] : 'You (local)',
+      id: user?.id ?? null,
+      displayName: user ? displayNameOf(user) : 'You (local)',
       isYou: true,
       ...stats,
     }
   })()
 
-  // Merge server board with local data
+  // Merge server board with local data. Identity is by user id now — the board
+  // no longer carries email addresses.
   const entries = board
-    ? board.map((e) => ({ ...e, isYou: user && e.email === user.email }))
+    ? board.map((e) => ({ ...e, isYou: user && e.id === user.id }))
     : localEntry ? [localEntry] : []
 
   const sorted = [...entries].sort((a, b) => (b.avgScore ?? -1) - (a.avgScore ?? -1))
@@ -60,7 +68,24 @@ export default function Leaderboard({ certId }) {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-3">Leaderboard</h2>
+      <div className="flex items-center justify-between mb-3 gap-3">
+        <h2 className="text-lg font-semibold">Leaderboard</h2>
+        {user && (
+          <div className="flex bg-slate-800 rounded-lg p-0.5 text-xs font-semibold shrink-0">
+            {['all', 'friends'].map((s) => (
+              <button
+                key={s}
+                onClick={() => setScope(s)}
+                className={`px-2.5 py-1 rounded-md transition-colors ${
+                  scope === s ? 'bg-slate-700 text-slate-100' : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {s === 'all' ? 'Everyone' : 'Friends'}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
       <div className="card border border-slate-700">
         {loading && <div className="text-slate-500 text-sm py-2">Loading scores…</div>}
         {!loading && sorted.length === 0 && (
@@ -70,13 +95,13 @@ export default function Leaderboard({ certId }) {
           <div className="space-y-0">
             {sorted.map((entry, i) => (
               <div
-                key={entry.displayName}
+                key={entry.id ?? entry.displayName}
                 className={`flex items-center gap-3 py-3 ${i < sorted.length - 1 ? 'border-b border-slate-700' : ''} ${entry.isYou ? `${c.dim} -mx-5 px-5 rounded-lg` : ''}`}
               >
                 <div className="w-6 flex items-center justify-center shrink-0">
                   <Medal rank={i + 1} />
                 </div>
-                <Avatar email={entry.email} name={entry.displayName} size={36} />
+                <Avatar hash={entry.avatarHash} email={entry.isYou ? user?.email : undefined} name={entry.displayName} size={36} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className={`font-semibold text-sm ${entry.isYou ? c.text : 'text-slate-200'}`}>
@@ -104,7 +129,7 @@ export default function Leaderboard({ certId }) {
         )}
         {!user && (
           <div className="mt-3 pt-3 border-t border-slate-700 text-xs text-slate-500">
-            <a href="/login" className="text-blue-400 hover:underline">Sign in</a> to see Jack and Billy's progress.
+            <a href="/login" className="text-blue-400 hover:underline">Sign in</a> to see how everyone is doing.
           </div>
         )}
       </div>
