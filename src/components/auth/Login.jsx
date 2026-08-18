@@ -30,12 +30,12 @@ export default function Login() {
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
-              <input type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+              <label htmlFor="login-email" className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <input id="login-email" name="email" type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus autoComplete="username" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
-              <input type="password" className="input" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <label htmlFor="login-password" className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <input id="login-password" name="password" type="password" className="input" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
             </div>
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</button>

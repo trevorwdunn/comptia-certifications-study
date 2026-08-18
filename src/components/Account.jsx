@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { domains as aPlusDomains } from '../data/a-plus/domains'
 import Core1Import from './progress/Core1Import'
 import Avatar from './Avatar'
+import MyCertifications from './MyCertifications'
 
 export default function Account() {
   const { user, logout } = useAuth()
@@ -23,6 +24,11 @@ export default function Account() {
           <div className="font-semibold truncate">{user.email}</div>
           <div className="text-xs text-slate-500">Signed in</div>
         </div>
+      </div>
+
+      <div>
+        <h2 className="font-bold mb-3">My Certifications</h2>
+        <MyCertifications />
       </div>
 
       <Core1Import certId="a-plus" domains={aPlusDomains} />

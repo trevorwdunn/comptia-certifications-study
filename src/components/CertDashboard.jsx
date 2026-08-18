@@ -3,6 +3,7 @@ import { getCert, CERT_COLORS } from '../certs'
 import { useCertData } from '../data/index'
 import Loading from './Loading'
 import { useProgress } from '../context/ProgressContext'
+import { getCertEarned } from '../lib/storage'
 import { useAuth } from '../context/AuthContext'
 import Leaderboard from './Leaderboard'
 
@@ -10,7 +11,7 @@ export default function CertDashboard() {
   const { certId } = useParams()
   const cert = getCert(certId)
   const data = useCertData(certId)
-  const { progress, activeCerts, toggleActiveCert } = useProgress()
+  const { progress, activeCerts, toggleActiveCert, setEarned } = useProgress()
   const { user } = useAuth()
 
   if (cert && !data) return <Loading />
@@ -18,6 +19,7 @@ export default function CertDashboard() {
 
   const c = CERT_COLORS[cert.color]
   const isActive = activeCerts.includes(certId)
+  const earned = getCertEarned(progress, certId)
 
   const allAttempts = [
     ...(progress[`${certId}:quiz_dall`]?.attempts || []),
@@ -52,14 +54,24 @@ export default function CertDashboard() {
             {cert.note && <p className="text-xs text-amber-400/80 mt-1">⚠ {cert.note}</p>}
           </div>
         </div>
-        <button
-          onClick={() => toggleActiveCert(certId)}
-          className={`text-sm px-3 py-1.5 rounded-full border transition-colors shrink-0 self-start ${
-            isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-slate-600 text-slate-500 hover:border-slate-400'
-          }`}
-        >
-          {isActive ? '● Studying' : '+ Study this cert'}
-        </button>
+        <div className="flex gap-2 shrink-0 self-start">
+          <button
+            onClick={() => toggleActiveCert(certId)}
+            className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
+              isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-slate-600 text-slate-500 hover:border-slate-400'
+            }`}
+          >
+            {isActive ? '● Studying' : '+ Study this cert'}
+          </button>
+          <button
+            onClick={() => setEarned(certId, !earned)}
+            className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
+              earned ? 'border-amber-500/40 text-amber-400 bg-amber-500/10' : 'border-slate-600 text-slate-500 hover:border-slate-400'
+            }`}
+          >
+            {earned ? `🏅 Earned ${new Date(earned.earnedAt).toLocaleDateString()}` : '🏅 Mark as earned'}
+          </button>
+        </div>
       </div>
 
       {/* Stats */}

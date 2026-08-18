@@ -90,8 +90,8 @@ export default function Home() {
   return (
     <div className="space-y-10">
       {/* Hero */}
-      <div className="flex items-start justify-between">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+        <div className="min-w-0">
           <h1 className="text-3xl font-bold">
             {user ? `Welcome back, ${user.email.split('@')[0]}` : 'CompTIA Study'}
           </h1>
@@ -102,7 +102,7 @@ export default function Home() {
           </p>
         </div>
         {!user && (
-          <Link to="/login" className="btn-primary text-sm shrink-0">Login or Sign Up</Link>
+          <Link to="/login" className="btn-primary text-sm shrink-0 self-start">Login or Sign Up</Link>
         )}
       </div>
 

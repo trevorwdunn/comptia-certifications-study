@@ -66,3 +66,41 @@ export function getActiveCerts(progress) {
 export function setActiveCerts(progress, certIds) {
   return { ...progress, _activeCerts: certIds }
 }
+
+// Most recent timestamp of any recorded activity for a cert — used to order
+// "currently studying" lists by what the user actually touched last.
+export function getCertLastActivity(progress, certId) {
+  const prefix = `${certId}:`
+  let latest = null
+  for (const [k, v] of Object.entries(progress)) {
+    if (!k.startsWith(prefix) || !v) continue
+    const dates = [
+      ...(v.attempts || []).map((a) => a.date),
+      v.lastReviewed,
+      v.lastVisited,
+    ].filter(Boolean)
+    for (const d of dates) if (!latest || d > latest) latest = d
+  }
+  return latest
+}
+
+export function setCertEarned(progress, certId, earned, earnedAt = new Date().toISOString()) {
+  const key = `${certId}:earned`
+  if (!earned) {
+    const { [key]: _omit, ...rest } = progress
+    return rest
+  }
+  return { ...progress, [key]: { earnedAt } }
+}
+
+export function getCertEarned(progress, certId) {
+  return progress[`${certId}:earned`] || null
+}
+
+// Sorted most-recently-earned first.
+export function getEarnedCerts(progress) {
+  return Object.entries(progress)
+    .filter(([k]) => k.endsWith(':earned'))
+    .map(([k, v]) => ({ certId: k.slice(0, -':earned'.length), earnedAt: v.earnedAt }))
+    .sort((a, b) => (a.earnedAt < b.earnedAt ? 1 : -1))
+}

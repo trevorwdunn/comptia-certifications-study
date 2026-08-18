@@ -3,13 +3,14 @@ import { Outlet, NavLink, Link, useParams, useNavigate, useLocation } from 'reac
 import { useAuth } from '../context/AuthContext'
 import { CERTS, CERT_COLORS, getCert } from '../certs'
 import Avatar from './Avatar'
+import MyCertifications from './MyCertifications'
 
 const certNavItems = [
-  { sub: '',           label: 'Overview',   icon: '⊞', end: true },
-  { sub: '/quiz',      label: 'Quiz',       icon: '✦' },
-  { sub: '/flashcards',label: 'Cards',      icon: '⟐' },
-  { sub: '/study',     label: 'Study',      icon: '≡' },
-  { sub: '/progress',  label: 'Progress',   icon: '◑' },
+  { sub: '',           label: 'Overview',   icon: '⊞', end: true, tint: 'sky'     },
+  { sub: '/quiz',      label: 'Quiz',       icon: '✦',            tint: 'violet'  },
+  { sub: '/flashcards',label: 'Cards',      icon: '⟐',            tint: 'emerald' },
+  { sub: '/study',     label: 'Study',      icon: '≡',            tint: 'amber'   },
+  { sub: '/progress',  label: 'Progress',   icon: '◑',            tint: 'rose'    },
 ]
 
 export default function Layout() {
@@ -118,7 +119,9 @@ export default function Layout() {
         )}
 
         <div className="px-2 py-3 flex-1 overflow-auto">
-          <div className="text-xs font-semibold text-slate-600 uppercase tracking-wider px-2 mb-2">Certifications</div>
+          <MyCertifications compact />
+
+          <div className="text-xs font-semibold text-slate-600 uppercase tracking-wider px-2 mb-2 mt-4">Certifications</div>
           <nav className="space-y-0.5">
             {CERTS.map((cc) => {
               const cl = CERT_COLORS[cc.color]
@@ -171,21 +174,30 @@ export default function Layout() {
             paddingBottom: 'env(safe-area-inset-bottom)',
           }}
         >
-          {certNavItems.map(({ sub, label, icon, end }) => (
-            <NavLink
-              key={sub}
-              to={`/${certId}${sub}`}
-              end={end}
-              className={({ isActive }) =>
-                `flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-[10px] font-medium transition-colors ${
-                  isActive ? c.text : 'text-slate-500'
-                }`
-              }
-            >
-              <span className="text-base leading-none">{icon}</span>
-              {label}
-            </NavLink>
-          ))}
+          {certNavItems.map(({ sub, label, icon, end, tint }) => {
+            const tc = CERT_COLORS[tint]
+            return (
+              <NavLink
+                key={sub}
+                to={`/${certId}${sub}`}
+                end={end}
+                className={({ isActive }) =>
+                  `flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 text-[11px] font-semibold transition-opacity ${tc.text} ${
+                    isActive ? 'opacity-100' : 'opacity-45'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <span className={`w-9 h-9 flex items-center justify-center rounded-xl text-xl leading-none transition-colors ${isActive ? tc.dim : ''}`}>
+                      {icon}
+                    </span>
+                    {label}
+                  </>
+                )}
+              </NavLink>
+            )
+          })}
         </nav>
       )}
     </div>

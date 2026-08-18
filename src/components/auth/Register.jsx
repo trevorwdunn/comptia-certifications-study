@@ -33,16 +33,16 @@ export default function Register() {
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
-              <input type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+              <label htmlFor="register-email" className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <input id="register-email" name="email" type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus autoComplete="username" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
-              <input type="password" className="input" placeholder="Min. 8 characters" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <label htmlFor="register-password" className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <input id="register-password" name="password" type="password" className="input" placeholder="Min. 8 characters" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="new-password" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirm Password</label>
-              <input type="password" className="input" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
+              <label htmlFor="register-confirm" className="block text-sm font-medium text-slate-300 mb-1.5">Confirm Password</label>
+              <input id="register-confirm" name="confirm-password" type="password" className="input" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required autoComplete="new-password" />
             </div>
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? 'Creating account…' : 'Create account'}</button>

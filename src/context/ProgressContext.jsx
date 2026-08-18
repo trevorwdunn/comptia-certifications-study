@@ -6,6 +6,7 @@ import {
   recordQuizAttempt, recordFlashcard,
   recordTopicVisit, markTopicComplete,
   getActiveCerts, setActiveCerts,
+  setCertEarned,
 } from '../lib/storage'
 
 const ProgressContext = createContext(null)
@@ -51,8 +52,10 @@ export function ProgressProvider({ children }) {
     })
   }, [update])
 
+  const setEarned = useCallback((certId, earned) => update((p) => setCertEarned(p, certId, earned)), [update])
+
   return (
-    <ProgressContext.Provider value={{ progress, activeCerts, toggleActiveCert, saveQuiz, saveQuizBatch, saveFlashcard, visitTopic, completeTopic }}>
+    <ProgressContext.Provider value={{ progress, activeCerts, toggleActiveCert, saveQuiz, saveQuizBatch, saveFlashcard, visitTopic, completeTopic, setEarned }}>
       {children}
     </ProgressContext.Provider>
   )
