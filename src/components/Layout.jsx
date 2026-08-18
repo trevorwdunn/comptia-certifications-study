@@ -31,8 +31,12 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen">
-      {/* Mobile top bar */}
-      <header className="lg:hidden fixed top-0 inset-x-0 h-14 bg-slate-900 border-b border-slate-800 z-30 flex items-center gap-3 px-3">
+      {/* Mobile top bar — padded for the iOS status bar inset so it doesn't
+          render underneath it when launched standalone from the home screen. */}
+      <header
+        className="lg:hidden fixed top-0 inset-x-0 bg-slate-900 border-b border-slate-800 z-30 flex items-center gap-3 px-3"
+        style={{ height: 'calc(var(--header-h) + env(safe-area-inset-top))', paddingTop: 'env(safe-area-inset-top)' }}
+      >
         <button
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
@@ -73,7 +77,10 @@ export default function Layout() {
           transform transition-transform duration-200 lg:translate-x-0
           ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="px-4 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div
+          className="px-4 py-4 border-b border-slate-800 flex items-center justify-between"
+          style={{ paddingTop: 'calc(1rem + env(safe-area-inset-top))' }}
+        >
           <Link to="/" className="flex items-center gap-2 group min-w-0">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center text-xs font-bold shrink-0">CT</div>
             <div className="min-w-0">
@@ -160,7 +167,7 @@ export default function Layout() {
       </aside>
 
       <main className="lg:ml-56">
-        <div className={`max-w-4xl mx-auto px-4 sm:px-6 pt-20 lg:pt-8 ${cert ? 'pb-tabbar' : 'pb-8'}`}>
+        <div className={`max-w-4xl mx-auto px-4 sm:px-6 pt-header ${cert ? 'pb-tabbar' : 'pb-8'}`}>
           <Outlet />
         </div>
       </main>

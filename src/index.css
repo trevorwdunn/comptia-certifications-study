@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root { --tabbar-h: 3.5rem; }
+  :root { --tabbar-h: 3.5rem; --header-h: 3.5rem; }
   body { @apply bg-slate-950 text-slate-100 min-h-screen; }
   * { @apply box-border; }
 }
@@ -22,6 +22,11 @@
      .pb-24, so the two classes together resolve to 2rem, not 6rem. */
   .pb-tabbar { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 1.5rem); }
   @screen lg { .pb-tabbar { padding-bottom: 2rem; } }
+
+  /* Same idea for the fixed mobile header — accounts for the iOS status bar
+     inset so content doesn't render underneath it in standalone/home-screen mode. */
+  .pt-header { padding-top: calc(var(--header-h) + env(safe-area-inset-top) + 1.5rem); }
+  @screen lg { .pt-header { padding-top: 2rem; } }
 }
 
 .flip-card { perspective: 1000px; }
