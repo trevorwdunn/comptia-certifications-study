@@ -26,7 +26,7 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-violet-600 rounded-2xl text-xl font-bold mb-4">CT</div>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-orange-500 rounded-2xl text-xl font-bold mb-4">CT</div>
           <h1 className="text-2xl font-bold">Create account</h1>
           <p className="text-slate-400 text-sm mt-1">Save and share progress across all certifications</p>
         </div>

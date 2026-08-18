@@ -54,7 +54,7 @@ export default function Layout() {
         </Link>
         <div className="ml-auto shrink-0">
           {user
-            ? <Avatar email={user.email} name={user.email.split('@')[0]} size={30} />
+            ? <Link to="/account"><Avatar email={user.email} name={user.email.split('@')[0]} size={30} /></Link>
             : <Link to="/login" className="text-xs btn-primary py-1.5 px-3">Sign in</Link>}
         </div>
       </header>
@@ -142,10 +142,10 @@ export default function Layout() {
         <div className="px-3 py-3 border-t border-slate-800">
           {user ? (
             <>
-              <div className="flex items-center gap-2 px-2 mb-1.5 min-w-0">
+              <Link to="/account" className="flex items-center gap-2 px-2 py-1 mb-1 min-w-0 rounded-lg hover:bg-slate-800">
                 <Avatar email={user.email} name={user.email.split('@')[0]} size={28} />
                 <div className="text-xs text-slate-400 truncate">{user.email.split('@')[0]}</div>
-              </div>
+              </Link>
               <button onClick={() => { logout(); navigate('/') }} className="btn-ghost text-xs w-full text-left text-slate-400 py-1.5">
                 Sign out
               </button>

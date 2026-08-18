@@ -102,7 +102,7 @@ export default function Home() {
           </p>
         </div>
         {!user && (
-          <Link to="/register" className="btn-primary text-sm shrink-0">Create Free Account</Link>
+          <Link to="/login" className="btn-primary text-sm shrink-0">Login or Sign Up</Link>
         )}
       </div>
 
