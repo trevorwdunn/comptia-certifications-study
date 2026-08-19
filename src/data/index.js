@@ -3,6 +3,12 @@
 import { useEffect, useState } from 'react'
 
 const loaders = {
+  'itf-plus': () => Promise.all([
+    import('./itf-plus/domains.js'),
+    import('./itf-plus/questions.js'),
+    import('./itf-plus/flashcards.js'),
+    import('./itf-plus/studyguide.js'),
+  ]),
   'network-plus': () => Promise.all([
     import('./network-plus/domains.js'),
     import('./network-plus/questions.js'),

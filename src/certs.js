@@ -12,7 +12,10 @@ export const CERTS = [
     duration: '60 minutes',
     description: 'Entry-level IT concepts: hardware, software, networking, security, and databases.',
     pathway: 'core',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/it-fundamentals/', kind: 'docs' },
+    ],
   },
   {
     id: 'a-plus',

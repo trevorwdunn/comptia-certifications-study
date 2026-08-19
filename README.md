@@ -8,11 +8,12 @@ Runs on Cloudflare Pages, with the API as Pages Functions and D1 for storage.
 
 ## Certifications
 
-Four have full content. The rest are registered in `src/certs.js` and render as
+Five have full content. The rest are registered in `src/certs.js` and render as
 coming-soon.
 
 | Certification | Exam | Questions | Flashcards | Study topics |
 |---|---|---:|---:|---:|
+| ITF+ | FC0-U61 | 60 | 76 | 24 |
 | A+ | 220-1201 / 220-1202 | 155 | 52 | 22 |
 | Network+ | N10-009 | 62 | 62 | 24 |
 | Security+ | SY0-701 | 60 | 75 | 37 |
@@ -21,7 +22,7 @@ coming-soon.
 A+ is a single entry containing both cores; its domain objects carry a `core: 1 | 2`
 field so the UI groups them.
 
-Also scaffolded, without content yet: ITF+, Linux+, Cloud+, CySA+, PenTest+, CASP+,
+Also scaffolded, without content yet: Linux+, Cloud+, CySA+, PenTest+, CASP+,
 DataSys+.
 
 ## Running it locally

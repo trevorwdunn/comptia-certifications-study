@@ -1,6 +1,6 @@
 import { readdirSync, existsSync } from 'node:fs'
 
-const certs = ['network-plus', 'a-plus', 'server-plus', 'security-plus']
+const certs = ['itf-plus', 'network-plus', 'a-plus', 'server-plus', 'security-plus']
 let problems = 0
 const bad = (msg) => { console.log(`  !! ${msg}`); problems++ }
 
