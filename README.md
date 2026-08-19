@@ -8,7 +8,8 @@ Runs on Cloudflare Pages, with the API as Pages Functions and D1 for storage.
 
 ## Certifications
 
-All eleven registered certifications have full content.
+All eleven CompTIA certifications have full content. The site also carries one
+non-CompTIA vendor track: 3CX self-hosted (see below).
 
 | Certification | Exam | Questions | Flashcards | Study topics |
 |---|---|---:|---:|---:|
@@ -23,6 +24,7 @@ All eleven registered certifications have full content.
 | CySA+ | CS0-003 | 48 | 55 | 16 |
 | PenTest+ | PT0-003 | 49 | 52 | 20 |
 | CASP+ | CAS-004 | 42 | 50 | 16 |
+| 3CX On-Prem *(vendor)* | Self-hosted v20 | 48 | 55 | 20 |
 
 A+ is a single entry containing both cores; its domain objects carry a `core: 1 | 2`
 field so the UI groups them.

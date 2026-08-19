@@ -50,7 +50,11 @@ export default function CertDashboard() {
           <div className={`w-12 h-12 sm:w-14 sm:h-14 shrink-0 ${c.bg} rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-bold text-white`}>{cert.badge}</div>
           <div className="min-w-0">
             <h1 className="text-xl sm:text-2xl font-bold">{cert.fullName}</h1>
-            <p className="text-slate-400 text-sm">{cert.code} · Passing score: {cert.passingScore}/900</p>
+            {/* Not every entry is scored out of 900 — CASP+ is pass/fail and 3CX is
+                vendor training, so both carry a null passingScore. */}
+            <p className="text-slate-400 text-sm">
+              {cert.code}{cert.passingScore ? ` · Passing score: ${cert.passingScore}/900` : ''}
+            </p>
             {cert.note && <p className="text-xs text-amber-400/80 mt-1">⚠ {cert.note}</p>}
           </div>
         </div>

@@ -9,7 +9,11 @@ function Results({ certId, questions, answers, onRestart, onBack }) {
   const cert = getCert(certId)
   const correct = answers.filter((a, i) => a === questions[i].correct).length
   const score = Math.round((correct / questions.length) * 100)
-  const passing = cert ? score >= Math.round((cert.passingScore / 900) * 100) : score >= 72
+  // A null passingScore (CASP+ is pass/fail, 3CX is vendor training) would otherwise
+  // compute a 0% threshold and mark every attempt a pass. Fall back to 72%, matching
+  // the default used on the progress view.
+  const threshold = cert?.passingScore ? Math.round((cert.passingScore / 900) * 100) : 72
+  const passing = score >= threshold
 
   return (
     <div className="space-y-6">

@@ -200,6 +200,49 @@ export const CERTS = [
       { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/datasys/', kind: 'docs' },
     ],
   },
+  // ── VOICE & UC ────────────────────────────────────────────────────────────
+  // Not a CompTIA exam — vendor platform training for real deployments.
+  {
+    id: 'threecx',
+    name: '3CX On-Prem',
+    fullName: '3CX Phone System — Self-Hosted (v20)',
+    code: 'Self-hosted / BYO hardware',
+    badge: '3CX',
+    color: 'violet',
+    passingScore: null,
+    questionCount: 48,
+    duration: 'Self-paced',
+    description: 'Deploying and running 3CX v20 on your own Debian 12 hardware: install, trunks, call flow, security, and maintenance.',
+    pathway: 'voice',
+    status: 'active',
+    note: 'Vendor training, not a CompTIA exam — quiz scores here are practice only. Always confirm commands and licensing against the current 3CX docs before a live deployment.',
+    resources: [
+      { label: '3CX Manual — installing on Debian', href: 'https://www.3cx.com/docs/manual/installing-debian-linux-pbx/', kind: 'docs' },
+      { label: '3CX Manual — firewall & router config', href: 'https://www.3cx.com/docs/manual/firewall-router-configuration/', kind: 'docs' },
+      { label: '3CX Manual — SIP trunks', href: 'https://www.3cx.com/docs/manual/sip-trunks/', kind: 'docs' },
+      { label: '3CX Manual — full documentation', href: 'https://www.3cx.com/docs/manual/', kind: 'docs' },
+      { label: '3CX Academy — free certification training', href: 'https://www.3cx.com/3cxacademy/', kind: 'docs' },
+      { label: '3CX Academy — Basic track', href: 'https://www.3cx.com/3cxacademy/basic/', kind: 'docs' },
+      { label: '3CX Academy — Advanced track', href: 'https://www.3cx.com/3cxacademy/advanced/', kind: 'docs' },
+      { label: '3CX pricing & editions (verify current tiers here)', href: 'https://www.3cx.com/ordering/pricing/', kind: 'docs' },
+      { label: '3CX community forums', href: 'https://www.3cx.com/community/', kind: 'docs' },
+      // Video — 3CX official channel plus the Voxtelesys "Quick Start Guide" V20 series,
+      // which is the most practical walkthrough set available for v20 admin tasks.
+      { label: '3CX official YouTube channel', href: 'https://www.youtube.com/@3cx-Global', kind: 'video' },
+      { label: 'Quick Start Guide playlist (V20 series)', href: 'https://www.youtube.com/playlist?list=PLSi2UwGgWaasLpyTCUM3WJqZbEons9Iaf', kind: 'video' },
+      { label: 'V20 Add Users walkthrough', href: 'https://www.youtube.com/watch?v=g6PYF3Y6lys', kind: 'video' },
+      { label: 'V20 SIP Trunk Setup', href: 'https://www.youtube.com/watch?v=uroy8U8Zd3w', kind: 'video' },
+      { label: 'V20 Add 911 / emergency rule', href: 'https://www.youtube.com/watch?v=tIY2ZGPVPQA', kind: 'video' },
+      { label: 'V20 SBC Setup (remote sites)', href: 'https://www.youtube.com/watch?v=bBLoaEmhWXM', kind: 'video' },
+      { label: 'V20 Add Departments', href: 'https://www.youtube.com/watch?v=Xw0Eov_rp1M', kind: 'video' },
+      { label: 'V20 Admin Portal tour', href: 'https://www.youtube.com/watch?v=sfD1ujmOCls', kind: 'video' },
+      { label: '3CX Web Client demo', href: 'https://www.youtube.com/watch?v=PThgwEumRwU', kind: 'video' },
+      { label: 'Debian server setup for 3CX (older version, still useful)', href: 'https://www.youtube.com/watch?v=ZN2Pk1dph08', kind: 'video' },
+      { label: 'V18 to V20 upgrade walkthrough', href: 'https://www.youtube.com/watch?v=na9yopTquzY', kind: 'video' },
+      { label: 'V20 upgrade checklist & FAQ webinar (3CX)', href: 'https://www.youtube.com/watch?v=ORCpsEqlRks', kind: 'video' },
+      { label: 'Installing the V20 Windows softphone', href: 'https://www.youtube.com/watch?v=q3oOyRgob50', kind: 'video' },
+    ],
+  },
 ]
 
 export const PATHWAYS = [
@@ -207,6 +250,7 @@ export const PATHWAYS = [
   { id: 'infrastructure', label: 'Infrastructure',  description: 'Servers, Linux, and cloud systems' },
   { id: 'cybersecurity',  label: 'Cybersecurity',   description: 'Security analysis, testing, and architecture' },
   { id: 'data',           label: 'Data',            description: 'Databases and data systems' },
+  { id: 'voice',          label: 'Voice & UC',      description: 'Phone systems and unified communications platforms' },
 ]
 
 export const CERT_COLORS = {

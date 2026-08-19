@@ -3,6 +3,12 @@
 import { useEffect, useState } from 'react'
 
 const loaders = {
+  'threecx': () => Promise.all([
+    import('./threecx/domains.js'),
+    import('./threecx/questions.js'),
+    import('./threecx/flashcards.js'),
+    import('./threecx/studyguide.js'),
+  ]),
   'casp-plus': () => Promise.all([
     import('./casp-plus/domains.js'),
     import('./casp-plus/questions.js'),
