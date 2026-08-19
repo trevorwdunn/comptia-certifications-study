@@ -107,7 +107,10 @@ export const CERTS = [
     duration: '90 minutes',
     description: 'Linux system administration, security, and scripting for modern infrastructure.',
     pathway: 'infrastructure',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/linux/', kind: 'docs' },
+    ],
   },
   {
     id: 'cloud-plus',
@@ -183,7 +186,10 @@ export const CERTS = [
     duration: '90 minutes',
     description: 'Database administration, data management, and analytics fundamentals.',
     pathway: 'data',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/datasys/', kind: 'docs' },
+    ],
   },
 ]
 

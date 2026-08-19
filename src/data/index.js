@@ -3,6 +3,18 @@
 import { useEffect, useState } from 'react'
 
 const loaders = {
+  'datasys-plus': () => Promise.all([
+    import('./datasys-plus/domains.js'),
+    import('./datasys-plus/questions.js'),
+    import('./datasys-plus/flashcards.js'),
+    import('./datasys-plus/studyguide.js'),
+  ]),
+  'linux-plus': () => Promise.all([
+    import('./linux-plus/domains.js'),
+    import('./linux-plus/questions.js'),
+    import('./linux-plus/flashcards.js'),
+    import('./linux-plus/studyguide.js'),
+  ]),
   'cloud-plus': () => Promise.all([
     import('./cloud-plus/domains.js'),
     import('./cloud-plus/questions.js'),
