@@ -142,7 +142,10 @@ export const CERTS = [
     duration: '165 minutes',
     description: 'Cybersecurity analyst skills: threat detection, analysis, and incident response.',
     pathway: 'cybersecurity',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/cybersecurity-analyst/', kind: 'docs' },
+    ],
   },
   {
     id: 'pentest-plus',
@@ -156,7 +159,10 @@ export const CERTS = [
     duration: '165 minutes',
     description: 'Penetration testing, vulnerability assessment, and ethical hacking techniques.',
     pathway: 'cybersecurity',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/pentest/', kind: 'docs' },
+    ],
   },
   {
     id: 'casp-plus',
@@ -170,7 +176,10 @@ export const CERTS = [
     duration: '165 minutes',
     description: 'Advanced security architecture, risk management, and enterprise security integration.',
     pathway: 'cybersecurity',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/securityx/', kind: 'docs' },
+    ],
     note: 'Pass/fail only — no numeric score reported',
   },
   // ── DATA ──────────────────────────────────────────────────────────────────

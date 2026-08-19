@@ -3,6 +3,24 @@
 import { useEffect, useState } from 'react'
 
 const loaders = {
+  'casp-plus': () => Promise.all([
+    import('./casp-plus/domains.js'),
+    import('./casp-plus/questions.js'),
+    import('./casp-plus/flashcards.js'),
+    import('./casp-plus/studyguide.js'),
+  ]),
+  'pentest-plus': () => Promise.all([
+    import('./pentest-plus/domains.js'),
+    import('./pentest-plus/questions.js'),
+    import('./pentest-plus/flashcards.js'),
+    import('./pentest-plus/studyguide.js'),
+  ]),
+  'cysa-plus': () => Promise.all([
+    import('./cysa-plus/domains.js'),
+    import('./cysa-plus/questions.js'),
+    import('./cysa-plus/flashcards.js'),
+    import('./cysa-plus/studyguide.js'),
+  ]),
   'datasys-plus': () => Promise.all([
     import('./datasys-plus/domains.js'),
     import('./datasys-plus/questions.js'),
