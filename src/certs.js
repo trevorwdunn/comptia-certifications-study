@@ -121,7 +121,10 @@ export const CERTS = [
     duration: '90 minutes',
     description: 'Cloud infrastructure, security, deployment models, and hybrid environments.',
     pathway: 'infrastructure',
-    status: 'coming-soon',
+    status: 'active',
+    resources: [
+      { label: 'Official exam page', href: 'https://www.comptia.org/en-us/certifications/cloud/', kind: 'docs' },
+    ],
   },
   // ── CYBERSECURITY ─────────────────────────────────────────────────────────
   {
