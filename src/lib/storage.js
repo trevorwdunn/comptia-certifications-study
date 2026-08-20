@@ -38,6 +38,39 @@ export function markTopicComplete(progress, { certId, topicId, completed }) {
   return { ...progress, [key]: { ...(progress[key] || {}), completed, lastVisited: new Date().toISOString() } }
 }
 
+// Videos are tracked by the watcher marking them done — we deliberately don't try
+// to read YouTube watch state, which the API hasn't exposed for years.
+export function markVideoWatched(progress, { certId, videoId, watched }) {
+  const key = `${certId}:vid_${videoId}`
+  if (!watched) {
+    const { [key]: _omit, ...rest } = progress
+    return rest
+  }
+  return { ...progress, [key]: { watched: true, watchedAt: new Date().toISOString() } }
+}
+
+export function isVideoWatched(progress, certId, videoId) {
+  return Boolean(progress[`${certId}:vid_${videoId}`]?.watched)
+}
+
+// `nextIndex` is simply the first unwatched video, so marking one done advances the
+// pointer on its own — no separate cursor to keep in sync.
+export function getVideoStats(progress, certId, videos = []) {
+  const watched = videos.filter((v) => isVideoWatched(progress, certId, v.id))
+  const nextIndex = videos.findIndex((v) => !isVideoWatched(progress, certId, v.id))
+  return {
+    total: videos.length,
+    watched: watched.length,
+    nextIndex,
+    complete: videos.length > 0 && nextIndex === -1,
+  }
+}
+
+export function resetVideoTrack(progress, certId) {
+  const prefix = `${certId}:vid_`
+  return Object.fromEntries(Object.entries(progress).filter(([k]) => !k.startsWith(prefix)))
+}
+
 // Derived purely from progress keys so callers don't need the cert's content
 // loaded — this is what lets the home screen skip downloading every cert.
 export function getCertAttempts(progress, certId) {
@@ -78,6 +111,7 @@ export function getCertLastActivity(progress, certId) {
       ...(v.attempts || []).map((a) => a.date),
       v.lastReviewed,
       v.lastVisited,
+      v.watchedAt,
     ].filter(Boolean)
     for (const d of dates) if (!latest || d > latest) latest = d
   }

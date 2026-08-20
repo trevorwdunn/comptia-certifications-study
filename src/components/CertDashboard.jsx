@@ -3,7 +3,7 @@ import { getCert, CERT_COLORS } from '../certs'
 import { useCertData } from '../data/index'
 import Loading from './Loading'
 import { useProgress } from '../context/ProgressContext'
-import { getCertEarned } from '../lib/storage'
+import { getCertEarned, getVideoStats } from '../lib/storage'
 import { useAuth } from '../context/AuthContext'
 import Leaderboard from './Leaderboard'
 
@@ -33,6 +33,8 @@ export default function CertDashboard() {
     (s, g) => s + g.topics.filter((t) => progress[`${certId}:topic_${t.id}`]?.completed).length, 0
   )
   const totalTopics = data.studyGuide.reduce((s, g) => s + g.topics.length, 0)
+  const videoStats = getVideoStats(progress, certId, cert.videos ?? [])
+  const videoPct = videoStats.total ? Math.round((videoStats.watched / videoStats.total) * 100) : 0
 
   // A+ grouping
   const coreGroups = cert.id === 'a-plus'
@@ -142,6 +144,38 @@ export default function CertDashboard() {
           </div>
         </div>
       ))}
+
+      {/* Video track — only for certs with a curated ordered list */}
+      {cert.videos?.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold mb-3">Video Track</h2>
+          <Link
+            to={`/${certId}/videos`}
+            className={`card border ${videoStats.complete ? 'border-emerald-600/40' : c.border} ${c.dim} block hover:brightness-110 transition-all`}
+          >
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <div className="min-w-0">
+                <div className="font-medium text-sm">
+                  {videoStats.complete
+                    ? 'Track complete'
+                    : videoStats.watched === 0
+                      ? 'Start the video track'
+                      : `Up next: video ${videoStats.nextIndex + 1}`}
+                </div>
+                <div className="text-xs text-slate-500 mt-0.5">
+                  {videoStats.watched} of {videoStats.total} watched · watch in order, mark as you go
+                </div>
+              </div>
+              <span className={`text-sm font-bold shrink-0 ${videoStats.complete ? 'text-emerald-400' : c.text}`}>
+                {videoPct}%
+              </span>
+            </div>
+            <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+              <div className={`h-full ${c.bar} rounded-full transition-all duration-500`} style={{ width: `${videoPct}%` }} />
+            </div>
+          </Link>
+        </div>
+      )}
 
       {/* Resources */}
       {cert.resources?.length > 0 && (

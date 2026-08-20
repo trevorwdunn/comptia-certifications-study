@@ -15,6 +15,7 @@ import FlashcardDeck from './components/flashcards/FlashcardDeck'
 import StudyGuideMenu from './components/studyguide/StudyGuideMenu'
 import TopicDetail from './components/studyguide/TopicDetail'
 import ProgressView from './components/progress/ProgressView'
+import VideoTrack from './components/videos/VideoTrack'
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
               <Route path=":certId/study" element={<StudyGuideMenu />} />
               <Route path=":certId/study/:guideId" element={<TopicDetail />} />
               <Route path=":certId/progress" element={<ProgressView />} />
+              <Route path=":certId/videos" element={<VideoTrack />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>

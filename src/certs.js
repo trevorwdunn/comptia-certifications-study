@@ -226,21 +226,82 @@ export const CERTS = [
       { label: '3CX Academy — Advanced track', href: 'https://www.3cx.com/3cxacademy/advanced/', kind: 'docs' },
       { label: '3CX pricing & editions (verify current tiers here)', href: 'https://www.3cx.com/ordering/pricing/', kind: 'docs' },
       { label: '3CX community forums', href: 'https://www.3cx.com/community/', kind: 'docs' },
-      // Video — 3CX official channel plus the Voxtelesys "Quick Start Guide" V20 series,
-      // which is the most practical walkthrough set available for v20 admin tasks.
+      // The individual walkthroughs live in `videos` below as an ordered track;
+      // these two are browsing entry points rather than single lessons.
       { label: '3CX official YouTube channel', href: 'https://www.youtube.com/@3cx-Global', kind: 'video' },
       { label: 'Quick Start Guide playlist (V20 series)', href: 'https://www.youtube.com/playlist?list=PLSi2UwGgWaasLpyTCUM3WJqZbEons9Iaf', kind: 'video' },
-      { label: 'V20 Add Users walkthrough', href: 'https://www.youtube.com/watch?v=g6PYF3Y6lys', kind: 'video' },
-      { label: 'V20 SIP Trunk Setup', href: 'https://www.youtube.com/watch?v=uroy8U8Zd3w', kind: 'video' },
-      { label: 'V20 Add 911 / emergency rule', href: 'https://www.youtube.com/watch?v=tIY2ZGPVPQA', kind: 'video' },
-      { label: 'V20 SBC Setup (remote sites)', href: 'https://www.youtube.com/watch?v=bBLoaEmhWXM', kind: 'video' },
-      { label: 'V20 Add Departments', href: 'https://www.youtube.com/watch?v=Xw0Eov_rp1M', kind: 'video' },
-      { label: 'V20 Admin Portal tour', href: 'https://www.youtube.com/watch?v=sfD1ujmOCls', kind: 'video' },
-      { label: '3CX Web Client demo', href: 'https://www.youtube.com/watch?v=PThgwEumRwU', kind: 'video' },
-      { label: 'Debian server setup for 3CX (older version, still useful)', href: 'https://www.youtube.com/watch?v=ZN2Pk1dph08', kind: 'video' },
-      { label: 'V18 to V20 upgrade walkthrough', href: 'https://www.youtube.com/watch?v=na9yopTquzY', kind: 'video' },
-      { label: 'V20 upgrade checklist & FAQ webinar (3CX)', href: 'https://www.youtube.com/watch?v=ORCpsEqlRks', kind: 'video' },
-      { label: 'Installing the V20 Windows softphone', href: 'https://www.youtube.com/watch?v=q3oOyRgob50', kind: 'video' },
+    ],
+    // Ordered viewing path. `id` is the YouTube video id and doubles as the stable
+    // progress key, so re-labelling a video never orphans someone's progress.
+    // Most of the "Quick Start Guide" series is published by Voxtelesys, a 3CX
+    // partner — `by` is shown in the UI so the source is never implied to be 3CX.
+    videos: [
+      {
+        id: 'sfD1ujmOCls',
+        title: 'V20 Admin Portal tour',
+        by: 'Midwest Dial Tone',
+        note: 'Start here — orientation in the console before you change anything.',
+      },
+      {
+        id: 'ZN2Pk1dph08',
+        title: 'Debian server setup for 3CX',
+        by: 'Voxtelesys',
+        note: 'Filmed against an older release, but the server prep workflow still maps onto a v20 build.',
+      },
+      {
+        id: 'g6PYF3Y6lys',
+        title: 'V20 Add Users',
+        by: 'Voxtelesys',
+        note: 'Extensions, welcome emails, and the basics of user setup.',
+      },
+      {
+        id: 'Xw0Eov_rp1M',
+        title: 'V20 Add Departments',
+        by: 'Voxtelesys',
+        note: 'Grouping users so permissions and hours are managed by role.',
+      },
+      {
+        id: 'uroy8U8Zd3w',
+        title: 'V20 SIP Trunk Setup',
+        by: 'Voxtelesys',
+        note: 'The step most deployments live or die on.',
+      },
+      {
+        id: 'tIY2ZGPVPQA',
+        title: 'V20 Add 911 / emergency rule',
+        by: 'Voxtelesys',
+        note: 'Do not skip — emergency routing carries legal obligations.',
+      },
+      {
+        id: 'bBLoaEmhWXM',
+        title: 'V20 SBC Setup',
+        by: 'Voxtelesys',
+        note: 'Needed once the client has a branch office or several remote phones.',
+      },
+      {
+        id: 'PThgwEumRwU',
+        title: '3CX Web Client demo',
+        by: 'Voxtelesys',
+        note: 'What end users actually see — useful for building your onboarding walkthrough.',
+      },
+      {
+        id: 'q3oOyRgob50',
+        title: 'Installing the V20 Windows softphone',
+        by: 'T2k Voice & Data',
+        note: 'Desktop client rollout.',
+      },
+      {
+        id: 'ORCpsEqlRks',
+        title: 'V20 upgrade checklist & FAQ webinar',
+        by: '3CX (official)',
+        note: 'Longer format. Worth it before touching an existing customer system.',
+      },
+      {
+        id: 'na9yopTquzY',
+        title: 'V18 to V20 upgrade walkthrough',
+        by: 'Voxtelesys',
+        note: 'Only relevant if you inherit a v18 system — skip on a greenfield build.',
+      },
     ],
   },
 ]
