@@ -6,16 +6,34 @@
     <title>CompTIA Study</title>
 
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#0f172a" />
-
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
 
     <!-- iOS "Add to Home Screen": launches full-screen with no Safari chrome -->
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="CompTIA Study" />
+
+    <!-- Runs before the stylesheet paints so a dark-mode user never sees a white
+         flash. Kept in sync with src/lib/theme.js, which owns the same rules once
+         React has mounted. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('cstudy_theme')
+          var dark = stored === 'dark' ||
+            (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          if (dark) {
+            document.documentElement.classList.add('dark')
+            document.querySelector('meta[name="theme-color"]').content = '#0f172a'
+            document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')
+              .content = 'black-translucent'
+          }
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -25,8 +25,8 @@ export default function FlashcardDeck() {
   if (!cert || cards.length === 0) {
     return (
       <div className="space-y-4">
-        <Link to={`/${certId}/flashcards`} className="text-slate-500 hover:text-white text-sm">← Flashcards</Link>
-        <div className="card border border-slate-700 text-center py-12 text-slate-500">No cards available yet.</div>
+        <Link to={`/${certId}/flashcards`} className="text-ink-5 hover:text-ink text-sm">← Flashcards</Link>
+        <div className="card border border-line-2 text-center py-12 text-ink-5">No cards available yet.</div>
       </div>
     )
   }
@@ -42,31 +42,31 @@ export default function FlashcardDeck() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link to={`/${certId}/flashcards`} className="text-slate-500 hover:text-white text-sm">← Flashcards</Link>
+          <Link to={`/${certId}/flashcards`} className="text-ink-5 hover:text-ink text-sm">← Flashcards</Link>
           <h1 className="text-xl font-bold mt-1">{cert.name} Flashcards</h1>
         </div>
-        <div className="text-sm text-slate-400">{index + 1} / {cards.length}</div>
+        <div className="text-sm text-ink-4">{index + 1} / {cards.length}</div>
       </div>
 
-      <div className="h-1.5 bg-slate-800 rounded-full">
+      <div className="h-1.5 bg-sunken rounded-full">
         <div className={`h-full ${c.bar} rounded-full transition-all`} style={{ width: `${(index / cards.length) * 100}%` }} />
       </div>
 
       <div className="flex gap-4 text-sm">
-        <span className="text-emerald-400">{mastered} mastered</span>
-        <span className="text-slate-500">{cards.length - mastered} remaining</span>
+        <span className="text-emerald-700 dark:text-emerald-400">{mastered} mastered</span>
+        <span className="text-ink-5">{cards.length - mastered} remaining</span>
       </div>
 
       <div className="flip-card" style={{ height: 260 }} onClick={() => setFlipped((f) => !f)}>
         <div className={`flip-card-inner ${flipped ? 'flipped' : ''}`}>
           <div className={`flip-card-front card border ${c.border} flex flex-col items-center justify-center cursor-pointer select-none`}>
-            <div className="text-xs text-slate-500 mb-4 uppercase tracking-wider">Term</div>
+            <div className="text-xs text-ink-5 mb-4 uppercase tracking-wider">Term</div>
             <div className="text-xl sm:text-2xl font-bold text-center px-4 sm:px-6">{card.term}</div>
-            <div className="text-xs text-slate-600 mt-6">Click to flip</div>
+            <div className="text-xs text-ink-6 mt-6">Click to flip</div>
           </div>
           <div className={`flip-card-back card border ${c.border} ${c.dim} flex flex-col items-center justify-center cursor-pointer select-none`}>
-            <div className="text-xs text-slate-500 mb-4 uppercase tracking-wider">Definition</div>
-            <div className="text-sm text-slate-200 text-center px-4 sm:px-6 leading-relaxed whitespace-pre-line overflow-y-auto max-h-full">{card.definition}</div>
+            <div className="text-xs text-ink-5 mb-4 uppercase tracking-wider">Definition</div>
+            <div className="text-sm text-ink-2 text-center px-4 sm:px-6 leading-relaxed whitespace-pre-line overflow-y-auto max-h-full">{card.definition}</div>
           </div>
         </div>
       </div>
@@ -75,8 +75,8 @@ export default function FlashcardDeck() {
         <button onClick={prev} disabled={index === 0} className="btn-secondary disabled:opacity-30 shrink-0">←</button>
         {flipped ? (
           <div className="flex gap-2 flex-1 min-w-0">
-            <button onClick={() => handleStatus('learning')} className="flex-1 px-2 sm:px-3 py-2 bg-red-900/30 border border-red-700/40 text-red-400 text-xs sm:text-sm rounded-lg hover:bg-red-900/50 transition-colors">Still Learning</button>
-            <button onClick={() => handleStatus('mastered')} className="flex-1 px-2 sm:px-3 py-2 bg-emerald-900/30 border border-emerald-700/40 text-emerald-400 text-xs sm:text-sm rounded-lg hover:bg-emerald-900/50 transition-colors">Mastered ✓</button>
+            <button onClick={() => handleStatus('learning')} className="flex-1 px-2 sm:px-3 py-2 bg-red-600/10 dark:bg-red-900/30 border border-red-600/30 dark:border-red-700/40 text-red-700 dark:text-red-400 text-xs sm:text-sm rounded-lg hover:bg-red-600/20 dark:hover:bg-red-900/50 transition-colors">Still Learning</button>
+            <button onClick={() => handleStatus('mastered')} className="flex-1 px-2 sm:px-3 py-2 bg-emerald-600/10 dark:bg-emerald-900/30 border border-emerald-600/30 dark:border-emerald-700/40 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm rounded-lg hover:bg-emerald-600/20 dark:hover:bg-emerald-900/50 transition-colors">Mastered ✓</button>
           </div>
         ) : (
           <button onClick={next} disabled={index >= cards.length - 1} className="btn-secondary disabled:opacity-30 shrink-0">Next →</button>

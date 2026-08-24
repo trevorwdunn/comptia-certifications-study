@@ -22,10 +22,10 @@ async function fetchLeaderboard(certId, scope) {
 }
 
 function Medal({ rank }) {
-  if (rank === 1) return <span className="text-amber-400 text-base">🥇</span>
-  if (rank === 2) return <span className="text-slate-400 text-base">🥈</span>
+  if (rank === 1) return <span className="text-amber-700 dark:text-amber-400 text-base">🥇</span>
+  if (rank === 2) return <span className="text-ink-4 text-base">🥈</span>
   if (rank === 3) return <span className="text-amber-700 text-base">🥉</span>
-  return <span className="text-slate-600 text-sm font-bold w-5 text-center">{rank}</span>
+  return <span className="text-ink-6 text-sm font-bold w-5 text-center">{rank}</span>
 }
 
 export default function Leaderboard({ certId }) {
@@ -71,13 +71,13 @@ export default function Leaderboard({ certId }) {
       <div className="flex items-center justify-between mb-3 gap-3">
         <h2 className="text-lg font-semibold">Leaderboard</h2>
         {user && (
-          <div className="flex bg-slate-800 rounded-lg p-0.5 text-xs font-semibold shrink-0">
+          <div className="flex bg-sunken rounded-lg p-0.5 text-xs font-semibold shrink-0">
             {['all', 'friends'].map((s) => (
               <button
                 key={s}
                 onClick={() => setScope(s)}
                 className={`px-2.5 py-1 rounded-md transition-colors ${
-                  scope === s ? 'bg-slate-700 text-slate-100' : 'text-slate-400 hover:text-slate-200'
+                  scope === s ? 'bg-raised text-ink' : 'text-ink-4 hover:text-ink-2'
                 }`}
               >
                 {s === 'all' ? 'Everyone' : 'Friends'}
@@ -86,17 +86,17 @@ export default function Leaderboard({ certId }) {
           </div>
         )}
       </div>
-      <div className="card border border-slate-700">
-        {loading && <div className="text-slate-500 text-sm py-2">Loading scores…</div>}
+      <div className="card border border-line-2">
+        {loading && <div className="text-ink-5 text-sm py-2">Loading scores…</div>}
         {!loading && sorted.length === 0 && (
-          <div className="text-slate-500 text-sm">No scores yet — be the first to quiz!</div>
+          <div className="text-ink-5 text-sm">No scores yet — be the first to quiz!</div>
         )}
         {!loading && sorted.length > 0 && (
           <div className="space-y-0">
             {sorted.map((entry, i) => (
               <div
                 key={entry.id ?? entry.displayName}
-                className={`flex items-center gap-3 py-3 ${i < sorted.length - 1 ? 'border-b border-slate-700' : ''} ${entry.isYou ? `${c.dim} -mx-5 px-5 rounded-lg` : ''}`}
+                className={`flex items-center gap-3 py-3 ${i < sorted.length - 1 ? 'border-b border-line-2' : ''} ${entry.isYou ? `${c.dim} -mx-5 px-5 rounded-lg` : ''}`}
               >
                 <div className="w-6 flex items-center justify-center shrink-0">
                   <Medal rank={i + 1} />
@@ -104,32 +104,32 @@ export default function Leaderboard({ certId }) {
                 <Avatar hash={entry.avatarHash} email={entry.isYou ? user?.email : undefined} name={entry.displayName} size={36} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className={`font-semibold text-sm ${entry.isYou ? c.text : 'text-slate-200'}`}>
+                    <span className={`font-semibold text-sm ${entry.isYou ? c.text : 'text-ink-2'}`}>
                       {entry.displayName}
                     </span>
-                    {entry.isYou && <span className="text-xs text-slate-500">(you)</span>}
+                    {entry.isYou && <span className="text-xs text-ink-5">(you)</span>}
                   </div>
-                  <div className="text-xs text-slate-500">
+                  <div className="text-xs text-ink-5">
                     {entry.attempts} quiz{entry.attempts !== 1 ? 'zes' : ''} · {entry.masteredCards} cards mastered
                   </div>
                 </div>
                 <div className="text-right shrink-0">
                   {entry.avgScore !== null ? (
-                    <div className={`text-lg font-bold ${entry.avgScore >= 80 ? 'text-emerald-400' : entry.avgScore >= 72 ? 'text-amber-400' : 'text-slate-400'}`}>
+                    <div className={`text-lg font-bold ${entry.avgScore >= 80 ? 'text-emerald-700 dark:text-emerald-400' : entry.avgScore >= 72 ? 'text-amber-700 dark:text-amber-400' : 'text-ink-4'}`}>
                       {entry.avgScore}%
                     </div>
                   ) : (
-                    <div className="text-slate-600 text-sm">No scores</div>
+                    <div className="text-ink-6 text-sm">No scores</div>
                   )}
-                  <div className="text-xs text-slate-600">avg score</div>
+                  <div className="text-xs text-ink-6">avg score</div>
                 </div>
               </div>
             ))}
           </div>
         )}
         {!user && (
-          <div className="mt-3 pt-3 border-t border-slate-700 text-xs text-slate-500">
-            <a href="/login" className="text-blue-400 hover:underline">Sign in</a> to see how everyone is doing.
+          <div className="mt-3 pt-3 border-t border-line-2 text-xs text-ink-5">
+            <a href="/login" className="text-blue-700 dark:text-blue-400 hover:underline">Sign in</a> to see how everyone is doing.
           </div>
         )}
       </div>

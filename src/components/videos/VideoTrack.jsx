@@ -15,14 +15,14 @@ export default function VideoTrack() {
   const cert = getCert(certId)
   const { progress, setVideoWatched, resetVideos } = useProgress()
 
-  if (!cert) return <div className="text-slate-400">Certification not found.</div>
+  if (!cert) return <div className="text-ink-4">Certification not found.</div>
 
   const videos = cert.videos ?? []
   if (videos.length === 0) {
     return (
       <div className="space-y-4">
         <h1 className="text-2xl font-bold">Video track</h1>
-        <p className="text-slate-400 text-sm">
+        <p className="text-ink-4 text-sm">
           No video track has been curated for {cert.name} yet.
         </p>
         <Link to={`/${certId}`} className="btn-secondary text-sm inline-block">Back to {cert.name}</Link>
@@ -37,11 +37,11 @@ export default function VideoTrack() {
   return (
     <div className="space-y-6">
       <div>
-        <Link to={`/${certId}`} className="text-xs text-slate-500 hover:text-slate-300">← {cert.name}</Link>
+        <Link to={`/${certId}`} className="text-xs text-ink-5 hover:text-ink-3">← {cert.name}</Link>
         <h1 className="text-2xl font-bold mt-1">Video track</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <p className="text-ink-4 text-sm mt-1">
           Watch in order. Videos open on YouTube in a new tab — come back and hit{' '}
-          <span className="text-slate-300 font-medium">Mark watched &amp; next</span> to advance.
+          <span className="text-ink-3 font-medium">Mark watched &amp; next</span> to advance.
         </p>
       </div>
 
@@ -50,22 +50,22 @@ export default function VideoTrack() {
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium">{watched} of {total} watched</span>
           <div className="flex items-center gap-3">
-            <span className={`text-sm font-bold ${complete ? 'text-emerald-400' : c.text}`}>{pct}%</span>
+            <span className={`text-sm font-bold ${complete ? 'text-emerald-700 dark:text-emerald-400' : c.text}`}>{pct}%</span>
             {watched > 0 && (
               <button
                 onClick={() => resetVideos(certId)}
-                className="text-xs text-slate-500 hover:text-red-400"
+                className="text-xs text-ink-5 hover:text-red-700 dark:hover:text-red-400"
               >
                 Reset
               </button>
             )}
           </div>
         </div>
-        <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+        <div className="h-2 bg-raised rounded-full overflow-hidden">
           <div className={`h-full ${c.bar} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
         </div>
         {complete && (
-          <p className="text-emerald-400 text-xs mt-3">
+          <p className="text-emerald-700 dark:text-emerald-400 text-xs mt-3">
             ✓ Track complete — every video marked watched.
           </p>
         )}
@@ -81,7 +81,7 @@ export default function VideoTrack() {
             <div
               key={v.id}
               className={`card border transition-colors ${
-                isCurrent ? `${c.border} ${c.dim}` : 'border-slate-700'
+                isCurrent ? `${c.border} ${c.dim}` : 'border-line-2'
               } ${done && !isCurrent ? 'opacity-60' : ''}`}
             >
               <div className="flex items-start gap-3">
@@ -93,7 +93,7 @@ export default function VideoTrack() {
                   className={`w-6 h-6 mt-0.5 shrink-0 rounded-md border flex items-center justify-center text-xs font-bold transition-colors ${
                     done
                       ? 'bg-emerald-600 border-emerald-600 text-white'
-                      : 'border-slate-600 text-transparent hover:border-slate-400'
+                      : 'border-line-3 text-transparent hover:border-line-5'
                   }`}
                 >
                   ✓
@@ -101,24 +101,24 @@ export default function VideoTrack() {
 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs text-slate-500">{i + 1}.</span>
+                    <span className="text-xs text-ink-5">{i + 1}.</span>
                     <a
                       href={watchUrl(v.id)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`font-medium text-sm hover:underline ${done ? 'text-slate-400' : 'text-slate-100'}`}
+                      className={`font-medium text-sm hover:underline ${done ? 'text-ink-4' : 'text-ink'}`}
                     >
                       {v.title}
                     </a>
-                    <span className="text-xs text-slate-600">↗</span>
+                    <span className="text-xs text-ink-6">↗</span>
                     {isCurrent && (
                       <span className={`text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded ${c.badge}`}>
                         Up next
                       </span>
                     )}
                   </div>
-                  {v.by && <div className="text-xs text-slate-500 mt-0.5">{v.by}</div>}
-                  {v.note && <div className="text-xs text-slate-500 mt-1">{v.note}</div>}
+                  {v.by && <div className="text-xs text-ink-5 mt-0.5">{v.by}</div>}
+                  {v.note && <div className="text-xs text-ink-5 mt-1">{v.note}</div>}
 
                   {isCurrent && (
                     <div className="flex flex-wrap gap-2 mt-3">
@@ -145,7 +145,7 @@ export default function VideoTrack() {
         })}
       </div>
 
-      <p className="text-xs text-slate-600">
+      <p className="text-xs text-ink-6">
         Progress is tracked here, not on YouTube — YouTube has not exposed watch history to
         other sites for years. Signed in, this syncs across your devices.
       </p>

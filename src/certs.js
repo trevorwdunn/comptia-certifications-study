@@ -315,19 +315,19 @@ export const PATHWAYS = [
 ]
 
 export const CERT_COLORS = {
-  blue:    { bg: 'bg-blue-600',    dim: 'bg-blue-600/10',    border: 'border-blue-600/40',    text: 'text-blue-400',    bar: 'bg-blue-500',    badge: 'bg-blue-600/20 text-blue-300',    hover: 'hover:bg-blue-600/15'    },
-  emerald: { bg: 'bg-emerald-600', dim: 'bg-emerald-600/10', border: 'border-emerald-600/40', text: 'text-emerald-400', bar: 'bg-emerald-500', badge: 'bg-emerald-600/20 text-emerald-300', hover: 'hover:bg-emerald-600/15' },
-  orange:  { bg: 'bg-orange-600',  dim: 'bg-orange-600/10',  border: 'border-orange-600/40',  text: 'text-orange-400',  bar: 'bg-orange-500',  badge: 'bg-orange-600/20 text-orange-300',  hover: 'hover:bg-orange-600/15'  },
-  rose:    { bg: 'bg-rose-600',    dim: 'bg-rose-600/10',    border: 'border-rose-600/40',    text: 'text-rose-400',    bar: 'bg-rose-500',    badge: 'bg-rose-600/20 text-rose-300',    hover: 'hover:bg-rose-600/15'    },
-  violet:  { bg: 'bg-violet-600',  dim: 'bg-violet-600/10',  border: 'border-violet-600/40',  text: 'text-violet-400',  bar: 'bg-violet-500',  badge: 'bg-violet-600/20 text-violet-300',  hover: 'hover:bg-violet-600/15'  },
-  amber:   { bg: 'bg-amber-600',   dim: 'bg-amber-600/10',   border: 'border-amber-600/40',   text: 'text-amber-400',   bar: 'bg-amber-500',   badge: 'bg-amber-600/20 text-amber-300',   hover: 'hover:bg-amber-600/15'   },
-  red:     { bg: 'bg-red-600',     dim: 'bg-red-600/10',     border: 'border-red-600/40',     text: 'text-red-400',     bar: 'bg-red-500',     badge: 'bg-red-600/20 text-red-300',     hover: 'hover:bg-red-600/15'     },
-  yellow:  { bg: 'bg-yellow-500',  dim: 'bg-yellow-500/10',  border: 'border-yellow-500/40',  text: 'text-yellow-400',  bar: 'bg-yellow-400',  badge: 'bg-yellow-500/20 text-yellow-300',  hover: 'hover:bg-yellow-500/15'  },
-  sky:     { bg: 'bg-sky-600',     dim: 'bg-sky-600/10',     border: 'border-sky-600/40',     text: 'text-sky-400',     bar: 'bg-sky-500',     badge: 'bg-sky-600/20 text-sky-300',     hover: 'hover:bg-sky-600/15'     },
-  purple:  { bg: 'bg-purple-600',  dim: 'bg-purple-600/10',  border: 'border-purple-600/40',  text: 'text-purple-400',  bar: 'bg-purple-500',  badge: 'bg-purple-600/20 text-purple-300',  hover: 'hover:bg-purple-600/15'  },
-  teal:    { bg: 'bg-teal-600',    dim: 'bg-teal-600/10',    border: 'border-teal-600/40',    text: 'text-teal-400',    bar: 'bg-teal-500',    badge: 'bg-teal-600/20 text-teal-300',    hover: 'hover:bg-teal-600/15'    },
-  slate:   { bg: 'bg-slate-600',   dim: 'bg-slate-600/10',   border: 'border-slate-600/40',   text: 'text-slate-400',   bar: 'bg-slate-500',   badge: 'bg-slate-600/20 text-slate-300',   hover: 'hover:bg-slate-600/15'   },
-  crimson: { bg: 'bg-red-800',     dim: 'bg-red-900/20',     border: 'border-red-800/40',     text: 'text-red-300',     bar: 'bg-red-700',     badge: 'bg-red-900/30 text-red-300',     hover: 'hover:bg-red-900/20'     },
+  blue:    { bg: 'bg-blue-600', dim: 'bg-blue-600/10', border: 'border-blue-600/40', text: 'text-blue-700 dark:text-blue-400', bar: 'bg-blue-500', badge: 'bg-blue-600/15 text-blue-800 dark:bg-blue-600/20 dark:text-blue-300', hover: 'hover:bg-blue-600/15' },
+  emerald: { bg: 'bg-emerald-600', dim: 'bg-emerald-600/10', border: 'border-emerald-600/40', text: 'text-emerald-700 dark:text-emerald-400', bar: 'bg-emerald-500', badge: 'bg-emerald-600/15 text-emerald-800 dark:bg-emerald-600/20 dark:text-emerald-300', hover: 'hover:bg-emerald-600/15' },
+  orange:  { bg: 'bg-orange-600', dim: 'bg-orange-600/10', border: 'border-orange-600/40', text: 'text-orange-700 dark:text-orange-400', bar: 'bg-orange-500', badge: 'bg-orange-600/15 text-orange-800 dark:bg-orange-600/20 dark:text-orange-300', hover: 'hover:bg-orange-600/15' },
+  rose:    { bg: 'bg-rose-600', dim: 'bg-rose-600/10', border: 'border-rose-600/40', text: 'text-rose-700 dark:text-rose-400', bar: 'bg-rose-500', badge: 'bg-rose-600/15 text-rose-800 dark:bg-rose-600/20 dark:text-rose-300', hover: 'hover:bg-rose-600/15' },
+  violet:  { bg: 'bg-violet-600', dim: 'bg-violet-600/10', border: 'border-violet-600/40', text: 'text-violet-700 dark:text-violet-400', bar: 'bg-violet-500', badge: 'bg-violet-600/15 text-violet-800 dark:bg-violet-600/20 dark:text-violet-300', hover: 'hover:bg-violet-600/15' },
+  amber:   { bg: 'bg-amber-600', dim: 'bg-amber-600/10', border: 'border-amber-600/40', text: 'text-amber-700 dark:text-amber-400', bar: 'bg-amber-500', badge: 'bg-amber-600/15 text-amber-800 dark:bg-amber-600/20 dark:text-amber-300', hover: 'hover:bg-amber-600/15' },
+  red:     { bg: 'bg-red-600', dim: 'bg-red-600/10', border: 'border-red-600/40', text: 'text-red-700 dark:text-red-400', bar: 'bg-red-500', badge: 'bg-red-600/15 text-red-800 dark:bg-red-600/20 dark:text-red-300', hover: 'hover:bg-red-600/15' },
+  yellow:  { bg: 'bg-yellow-500', dim: 'bg-yellow-500/10', border: 'border-yellow-500/40', text: 'text-yellow-700 dark:text-yellow-400', bar: 'bg-yellow-400', badge: 'bg-yellow-500/15 text-yellow-800 dark:bg-yellow-500/20 dark:text-yellow-300', hover: 'hover:bg-yellow-500/15' },
+  sky:     { bg: 'bg-sky-600', dim: 'bg-sky-600/10', border: 'border-sky-600/40', text: 'text-sky-700 dark:text-sky-400', bar: 'bg-sky-500', badge: 'bg-sky-600/15 text-sky-800 dark:bg-sky-600/20 dark:text-sky-300', hover: 'hover:bg-sky-600/15' },
+  purple:  { bg: 'bg-purple-600', dim: 'bg-purple-600/10', border: 'border-purple-600/40', text: 'text-purple-700 dark:text-purple-400', bar: 'bg-purple-500', badge: 'bg-purple-600/15 text-purple-800 dark:bg-purple-600/20 dark:text-purple-300', hover: 'hover:bg-purple-600/15' },
+  teal:    { bg: 'bg-teal-600', dim: 'bg-teal-600/10', border: 'border-teal-600/40', text: 'text-teal-700 dark:text-teal-400', bar: 'bg-teal-500', badge: 'bg-teal-600/15 text-teal-800 dark:bg-teal-600/20 dark:text-teal-300', hover: 'hover:bg-teal-600/15' },
+  slate:   { bg: 'bg-slate-600', dim: 'bg-slate-600/10', border: 'border-slate-600/40', text: 'text-slate-700 dark:text-slate-400', bar: 'bg-slate-500', badge: 'bg-slate-600/15 text-slate-800 dark:bg-slate-600/20 dark:text-slate-300', hover: 'hover:bg-slate-600/15' },
+  crimson: { bg: 'bg-red-800', dim: 'bg-red-700/10 dark:bg-red-900/20', border: 'border-red-800/40', text: 'text-red-800 dark:text-red-300', bar: 'bg-red-700', badge: 'bg-red-800/15 text-red-900 dark:bg-red-900/30 dark:text-red-300', hover: 'hover:bg-red-700/10 dark:hover:bg-red-900/20' },
 }
 
 export function getCert(id) { return CERTS.find((c) => c.id === id) }

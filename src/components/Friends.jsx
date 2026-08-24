@@ -15,7 +15,7 @@ function Person({ person, children }) {
     <div className="flex items-center gap-3 py-3">
       <Avatar hash={person.avatarHash} name={person.username} size={36} />
       <div className="flex-1 min-w-0">
-        <div className="font-semibold text-sm text-slate-200 truncate">{person.username}</div>
+        <div className="font-semibold text-sm text-ink-2 truncate">{person.username}</div>
       </div>
       <div className="flex items-center gap-2 shrink-0">{children}</div>
     </div>
@@ -74,15 +74,15 @@ export default function Friends() {
     <div className="space-y-6 max-w-lg">
       <div>
         <h1 className="text-2xl font-bold">Friends</h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <p className="text-ink-4 text-sm mt-1">
           Add people by username to compare progress on the leaderboard.
         </p>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>}
 
       <div className="card">
-        <label htmlFor="friend-search" className="block text-sm font-medium text-slate-300 mb-1.5">
+        <label htmlFor="friend-search" className="block text-sm font-medium text-ink-3 mb-1.5">
           Find someone
         </label>
         <input
@@ -93,12 +93,12 @@ export default function Friends() {
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
         />
-        {searching && <p className="text-slate-500 text-xs mt-2">Searching…</p>}
+        {searching && <p className="text-ink-5 text-xs mt-2">Searching…</p>}
         {results && results.length === 0 && !searching && (
-          <p className="text-slate-500 text-sm mt-3">No one found with that username.</p>
+          <p className="text-ink-5 text-sm mt-3">No one found with that username.</p>
         )}
         {results && results.length > 0 && (
-          <div className="mt-2 divide-y divide-slate-700">
+          <div className="mt-2 divide-y divide-line-2">
             {results.map((p) => (
               <Person key={p.id} person={p}>
                 {p.relationship === 'none' ? (
@@ -110,7 +110,7 @@ export default function Friends() {
                     {busy === p.id ? '…' : 'Add'}
                   </button>
                 ) : (
-                  <span className="text-xs text-slate-500">{RELATIONSHIP_LABEL[p.relationship]}</span>
+                  <span className="text-xs text-ink-5">{RELATIONSHIP_LABEL[p.relationship]}</span>
                 )}
               </Person>
             ))}
@@ -119,15 +119,15 @@ export default function Friends() {
       </div>
 
       {loading ? (
-        <p className="text-slate-500 text-sm">Loading…</p>
+        <p className="text-ink-5 text-sm">Loading…</p>
       ) : (
         <>
           {data.incoming.length > 0 && (
             <div>
               <h2 className="font-bold mb-2">
-                Requests <span className="text-xs text-slate-500 font-normal">({data.incoming.length})</span>
+                Requests <span className="text-xs text-ink-5 font-normal">({data.incoming.length})</span>
               </h2>
-              <div className="card divide-y divide-slate-700">
+              <div className="card divide-y divide-line-2">
                 {data.incoming.map((p) => (
                   <Person key={p.friendshipId} person={p}>
                     <button
@@ -152,19 +152,19 @@ export default function Friends() {
 
           <div>
             <h2 className="font-bold mb-2">
-              Your friends <span className="text-xs text-slate-500 font-normal">({data.friends.length})</span>
+              Your friends <span className="text-xs text-ink-5 font-normal">({data.friends.length})</span>
             </h2>
             <div className="card">
               {data.friends.length === 0 ? (
-                <p className="text-slate-500 text-sm">
+                <p className="text-ink-5 text-sm">
                   No friends yet — search for a username above to send a request.
                 </p>
               ) : (
-                <div className="divide-y divide-slate-700">
+                <div className="divide-y divide-line-2">
                   {data.friends.map((p) => (
                     <Person key={p.friendshipId} person={p}>
                       <button
-                        className="btn-ghost text-xs py-1.5 px-2 text-slate-500 hover:text-red-400"
+                        className="btn-ghost text-xs py-1.5 px-2 text-ink-5 hover:text-red-700 dark:hover:text-red-400"
                         disabled={busy === p.friendshipId}
                         onClick={() => act(p.friendshipId, () => api.friends.remove(p.friendshipId))}
                       >
@@ -180,11 +180,11 @@ export default function Friends() {
           {data.outgoing.length > 0 && (
             <div>
               <h2 className="font-bold mb-2">Sent requests</h2>
-              <div className="card divide-y divide-slate-700">
+              <div className="card divide-y divide-line-2">
                 {data.outgoing.map((p) => (
                   <Person key={p.friendshipId} person={p}>
                     <button
-                      className="btn-ghost text-xs py-1.5 px-2 text-slate-500 hover:text-red-400"
+                      className="btn-ghost text-xs py-1.5 px-2 text-ink-5 hover:text-red-700 dark:hover:text-red-400"
                       disabled={busy === p.friendshipId}
                       onClick={() => act(p.friendshipId, () => api.friends.remove(p.friendshipId))}
                     >

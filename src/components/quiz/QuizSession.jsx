@@ -18,9 +18,9 @@ function Results({ certId, questions, answers, onRestart, onBack }) {
   return (
     <div className="space-y-6">
       <div className={`card border text-center py-8 ${passing ? 'border-emerald-600/40 bg-emerald-600/5' : 'border-red-600/40 bg-red-600/5'}`}>
-        <div className={`text-5xl font-bold mb-2 ${passing ? 'text-emerald-400' : 'text-red-400'}`}>{score}%</div>
+        <div className={`text-5xl font-bold mb-2 ${passing ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}>{score}%</div>
         <div className="text-lg font-semibold mb-1">{passing ? 'Passing Score!' : 'Keep Studying'}</div>
-        <div className="text-slate-400 text-sm">{correct} / {questions.length} correct</div>
+        <div className="text-ink-4 text-sm">{correct} / {questions.length} correct</div>
       </div>
       <div className="flex gap-3">
         <button onClick={onRestart} className="btn-primary flex-1">Try Again</button>
@@ -38,11 +38,11 @@ function Results({ certId, questions, answers, onRestart, onBack }) {
               </div>
               <div className="ml-7 space-y-1 text-sm">
                 {q.options.map((opt, j) => (
-                  <div key={j} className={`px-3 py-1.5 rounded-md ${j === q.correct ? 'bg-emerald-600/20 text-emerald-300' : j === answers[i] && !isCorrect ? 'bg-red-600/20 text-red-300' : 'text-slate-500'}`}>
+                  <div key={j} className={`px-3 py-1.5 rounded-md ${j === q.correct ? 'bg-emerald-600/15 text-emerald-800 dark:bg-emerald-600/20 dark:text-emerald-300' : j === answers[i] && !isCorrect ? 'bg-red-600/15 text-red-800 dark:bg-red-600/20 dark:text-red-300' : 'text-ink-5'}`}>
                     {j === q.correct ? '✓ ' : j === answers[i] && !isCorrect ? '✗ ' : '   '}{opt}
                   </div>
                 ))}
-                <p className="text-slate-400 text-xs mt-2 pt-2 border-t border-slate-700">{q.explanation}</p>
+                <p className="text-ink-4 text-xs mt-2 pt-2 border-t border-line-2">{q.explanation}</p>
               </div>
             </div>
           )
@@ -100,10 +100,10 @@ export default function QuizSession() {
   if (!cert || qs.length === 0) {
     return (
       <div className="space-y-4">
-        <Link to={`/${certId}/quiz`} className="text-slate-500 hover:text-white text-sm">← Quiz Menu</Link>
-        <div className="card border border-slate-700 text-center py-12">
-          <div className="text-slate-400 text-lg mb-2">No questions available yet</div>
-          <p className="text-slate-500 text-sm">Content for this certification is coming soon.</p>
+        <Link to={`/${certId}/quiz`} className="text-ink-5 hover:text-ink text-sm">← Quiz Menu</Link>
+        <div className="card border border-line-2 text-center py-12">
+          <div className="text-ink-4 text-lg mb-2">No questions available yet</div>
+          <p className="text-ink-5 text-sm">Content for this certification is coming soon.</p>
         </div>
       </div>
     )
@@ -117,28 +117,28 @@ export default function QuizSession() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link to={`/${certId}/quiz`} className="text-slate-500 hover:text-white text-sm">← Quiz Menu</Link>
+          <Link to={`/${certId}/quiz`} className="text-ink-5 hover:text-ink text-sm">← Quiz Menu</Link>
           <h1 className="text-xl font-bold mt-1">{domain ? `D${domain.id}: ${domain.name}` : `${cert.name} — Mixed Exam`}</h1>
         </div>
-        <div className="text-sm text-slate-400">{current + 1} / {qs.length}</div>
+        <div className="text-sm text-ink-4">{current + 1} / {qs.length}</div>
       </div>
 
-      <div className="h-1.5 bg-slate-800 rounded-full">
+      <div className="h-1.5 bg-sunken rounded-full">
         <div className={`h-full ${c.bar} rounded-full transition-all duration-300`} style={{ width: `${pct}%` }} />
       </div>
 
       <div className="card">
-        <div className="text-xs text-slate-500 mb-3">Question {current + 1} · Domain {q.domain}</div>
+        <div className="text-xs text-ink-5 mb-3">Question {current + 1} · Domain {q.domain}</div>
         <p className="font-medium text-base leading-relaxed mb-6">{q.question}</p>
         <div className="space-y-2">
           {q.options.map((opt, idx) => {
             let cls = 'w-full text-left px-4 py-3 rounded-lg border text-sm transition-colors '
             if (!confirmed) {
-              cls += selected === idx ? `${c.border} ${c.dim} ${c.text}` : 'border-slate-700 bg-slate-900 hover:border-slate-500 text-slate-200 cursor-pointer'
+              cls += selected === idx ? `${c.border} ${c.dim} ${c.text}` : 'border-line-2 bg-sunken dark:bg-field hover:border-line-4 text-ink-2 cursor-pointer'
             } else {
-              if (idx === q.correct) cls += 'border-emerald-500 bg-emerald-600/20 text-emerald-200'
-              else if (idx === selected) cls += 'border-red-500 bg-red-600/20 text-red-200'
-              else cls += 'border-slate-800 bg-slate-900/50 text-slate-500'
+              if (idx === q.correct) cls += 'border-emerald-500 bg-emerald-600/15 text-emerald-800 dark:bg-emerald-600/20 dark:text-emerald-200'
+              else if (idx === selected) cls += 'border-red-500 bg-red-600/15 text-red-800 dark:bg-red-600/20 dark:text-red-200'
+              else cls += 'border-line bg-sunken/60 dark:bg-field/50 text-ink-5'
             }
             return (
               <button key={idx} className={cls} onClick={() => { if (!confirmed) setSelected(idx) }} disabled={confirmed}>
@@ -148,7 +148,7 @@ export default function QuizSession() {
           })}
         </div>
         {confirmed && (
-          <div className={`mt-4 p-3 rounded-lg text-sm ${selected === q.correct ? 'bg-emerald-900/30 text-emerald-300' : 'bg-red-900/30 text-red-300'}`}>
+          <div className={`mt-4 p-3 rounded-lg text-sm ${selected === q.correct ? 'bg-emerald-600/10 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300' : 'bg-red-600/10 text-red-800 dark:bg-red-900/30 dark:text-red-300'}`}>
             <span className="font-semibold">{selected === q.correct ? 'Correct! ' : 'Incorrect. '}</span>{q.explanation}
           </div>
         )}

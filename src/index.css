@@ -3,18 +3,90 @@
 @tailwind utilities;
 
 @layer base {
-  :root { --tabbar-h: 3.5rem; --header-h: 3.5rem; }
-  body { @apply bg-slate-950 text-slate-100 min-h-screen; }
+  /* Light is the default palette; `.dark` on <html> swaps it. The class is set
+     by the inline script in index.html before first paint, so a dark-mode user
+     never sees a white flash. Values are space-separated RGB channels because
+     tailwind.config.js wraps them in rgb(… / <alpha-value>) so opacity
+     modifiers (bg-surface/50) keep working. */
+  :root {
+    --tabbar-h: 3.5rem;
+    --header-h: 3.5rem;
+
+    --canvas:    246 248 251;
+    --chrome:    255 255 255;
+    --surface:   255 255 255;
+    --sunken:    237 241 246;
+    --raised:    226 232 240;
+    --raised-hi: 203 213 225;
+    --field:     255 255 255;
+
+    --line:      229 233 240;
+    --line-2:    226 232 240;
+    --line-3:    203 213 225;
+    --line-4:    148 163 184;
+    --line-5:    148 163 184;
+
+    --ink:        15  23  42;
+    --ink-2:      30  41  59;
+    --ink-3:      51  65  85;
+    --ink-4:      71  85 105;
+    --ink-5:      90 104 124;
+    --ink-6:     122 135 152;
+
+    --scrim:      15  23  42;
+    --scrim-a:   0.35;
+
+    color-scheme: light;
+  }
+
+  :root.dark {
+    --canvas:      2   6  23;
+    --chrome:     15  23  42;
+    --surface:    30  41  59;
+    --sunken:     30  41  59;
+    --raised:     51  65  85;
+    --raised-hi:  71  85 105;
+    --field:      15  23  42;
+
+    --line:       30  41  59;
+    --line-2:     51  65  85;
+    --line-3:     71  85 105;
+    --line-4:    100 116 139;
+    --line-5:    148 163 184;
+
+    --ink:       241 245 249;
+    --ink-2:     226 232 240;
+    --ink-3:     203 213 225;
+    --ink-4:     148 163 184;
+    --ink-5:     100 116 139;
+    --ink-6:      71  85 105;
+
+    --scrim:       0   0   0;
+    --scrim-a:   0.6;
+
+    color-scheme: dark;
+  }
+
+  body { @apply bg-canvas text-ink min-h-screen; }
   * { @apply box-border; }
 }
 
 @layer components {
-  .card { @apply bg-slate-800 rounded-xl border border-slate-700 p-5; }
+  .card { @apply bg-surface rounded-xl border border-line-2 p-5; }
   .btn-primary { @apply bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed; }
-  .btn-secondary { @apply bg-slate-700 hover:bg-slate-600 text-slate-100 font-medium px-4 py-2 rounded-lg transition-colors duration-150; }
-  .btn-ghost { @apply hover:bg-slate-700 text-slate-300 hover:text-white px-3 py-2 rounded-lg transition-colors duration-150; }
-  .input { @apply bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-full; }
+  .btn-secondary { @apply bg-raised hover:bg-raised-hi text-ink font-medium px-4 py-2 rounded-lg transition-colors duration-150; }
+  .btn-ghost { @apply hover:bg-raised text-ink-3 hover:text-ink px-3 py-2 rounded-lg transition-colors duration-150; }
+  .input { @apply bg-field border border-line-3 rounded-lg px-3 py-2 text-ink placeholder:text-ink-5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 w-full; }
   .badge { @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium; }
+
+  /* Backdrop behind the mobile drawer. Pure black is too heavy over a light
+     page, so the tint and its opacity are both theme variables. */
+  .scrim { background-color: rgb(var(--scrim) / var(--scrim-a)); }
+
+  /* Inline `code` spans inside study-guide content, which is built as an HTML
+     string in TopicDetail — a class keeps the theme handling out of that
+     template. */
+  .code-inline { @apply bg-sunken px-1 rounded text-blue-700 dark:text-blue-300 text-xs; }
 
   /* Clears the fixed mobile tab bar plus the iOS home indicator. Derived from
      --tabbar-h, which the bar itself is sized by, so the two cannot drift apart.
@@ -37,5 +109,5 @@
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
+::-webkit-scrollbar-thumb { background: rgb(var(--raised)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--raised-hi)); }

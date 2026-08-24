@@ -50,6 +50,34 @@ npx wrangler pages dev dist
 Without an account the app still works fully; progress is kept in `localStorage` and
 merged into your account if you sign in later.
 
+## Theming
+
+The app ships light and dark palettes. It follows the OS setting by default; the
+light/dark/system control in the sidebar footer (and on the Account page) overrides that
+and is remembered in `localStorage` under `cstudy_theme`.
+
+Neutrals — every background, border and text colour — come from semantic tokens rather
+than raw Tailwind shades: `canvas`, `chrome`, `surface`, `sunken`, `raised`, `field`,
+`line`/`line-2`…`line-5`, and `ink`/`ink-2`…`ink-6`. Each is a CSS custom property defined
+twice in `src/index.css` — once on `:root` for light, once on `:root.dark` — and exposed to
+Tailwind by `tailwind.config.js`, so `bg-surface` or `text-ink-4` resolves correctly in
+both themes with no `dark:` variant needed.
+
+`dark:` is reserved for the accent hues (blue, emerald, red, amber, and the per-cert
+colours in `src/certs.js`), where the shade tuned for a dark background genuinely has to
+change — `text-emerald-700 dark:text-emerald-400`.
+
+Two constraints worth knowing before you touch it:
+
+- `sunken` and `surface` are the same shade in dark mode, so anything that needs to read as
+  inset *on a card* needs an explicit `dark:` fallback (see the quiz options in
+  `QuizSession.jsx`).
+- The palette is chosen by an inline script at the end of `<head>` in `index.html`, before
+  the stylesheet paints, so a dark-mode user never sees a white flash. It duplicates the
+  storage key and resolution rules in `src/lib/theme.js` — change one, change the other.
+
+`SETUP.html` is a standalone deployment runbook, not part of the app, and is still dark-only.
+
 ## Editing content
 
 Content lives in `src/data/<cert-id>/` as four files: `domains.js`, `questions.js`,

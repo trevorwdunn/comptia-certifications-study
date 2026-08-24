@@ -14,57 +14,57 @@ function CertCard({ cert }) {
 
   if (isComingSoon) {
     return (
-      <div className="card border border-slate-700/50 opacity-60 relative overflow-hidden">
+      <div className="card border border-line-2/50 opacity-60 relative overflow-hidden">
         <div className="absolute top-2.5 right-2.5">
-          <span className="text-xs bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">Coming Soon</span>
+          <span className="text-xs bg-raised text-ink-4 px-2 py-0.5 rounded-full">Coming Soon</span>
         </div>
         <div className="flex items-center gap-3 mb-3">
           <div className={`w-9 h-9 ${c.bg} opacity-50 rounded-xl flex items-center justify-center font-bold text-white text-xs`}>{cert.badge}</div>
           <div>
-            <div className="font-semibold text-slate-400">{cert.name}</div>
-            <div className="text-xs text-slate-600">{cert.code}</div>
+            <div className="font-semibold text-ink-4">{cert.name}</div>
+            <div className="text-xs text-ink-6">{cert.code}</div>
           </div>
         </div>
-        <p className="text-xs text-slate-500">{cert.description}</p>
+        <p className="text-xs text-ink-5">{cert.description}</p>
       </div>
     )
   }
 
   return (
-    <div className={`card border transition-all ${isActive ? `${c.border} ${c.dim}` : 'border-slate-700 hover:border-slate-500'}`}>
+    <div className={`card border transition-all ${isActive ? `${c.border} ${c.dim}` : 'border-line-2 hover:border-line-4'}`}>
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 ${c.bg} rounded-xl flex items-center justify-center font-bold text-white text-sm`}>{cert.badge}</div>
           <div>
             <div className="font-bold">{cert.name}</div>
-            <div className="text-xs text-slate-500">{cert.code}</div>
+            <div className="text-xs text-ink-5">{cert.code}</div>
           </div>
         </div>
         <button
           onClick={() => toggleActiveCert(cert.id)}
           className={`text-xs px-2.5 py-1 rounded-full border transition-colors shrink-0 ${
-            isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-slate-600 text-slate-500 hover:border-slate-400'
+            isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-line-3 text-ink-5 hover:border-line-5'
           }`}
         >
           {isActive ? '● Studying' : '+ Study'}
         </button>
       </div>
 
-      <p className="text-xs text-slate-400 mb-3 leading-relaxed">{cert.description}</p>
-      {cert.note && <p className="text-xs text-amber-400/80 mb-3">⚠ {cert.note}</p>}
+      <p className="text-xs text-ink-4 mb-3 leading-relaxed">{cert.description}</p>
+      {cert.note && <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mb-3">⚠ {cert.note}</p>}
 
       <div className="flex gap-4 text-sm mb-3">
         <div>
           <div className={`font-bold text-base ${c.text}`}>{avgScore !== null ? `${avgScore}%` : '—'}</div>
-          <div className="text-xs text-slate-600">Avg Score</div>
+          <div className="text-xs text-ink-6">Avg Score</div>
         </div>
         <div>
           <div className={`font-bold text-base ${c.text}`}>{quizCount}</div>
-          <div className="text-xs text-slate-600">Quizzes</div>
+          <div className="text-xs text-ink-6">Quizzes</div>
         </div>
         <div>
           <div className={`font-bold text-base ${c.text}`}>{masteredCards}</div>
-          <div className="text-xs text-slate-600">Cards</div>
+          <div className="text-xs text-ink-6">Cards</div>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold">
             {user ? `Welcome back, ${user.email.split('@')[0]}` : 'CompTIA Study'}
           </h1>
-          <p className="text-slate-400 mt-1 text-sm">
+          <p className="text-ink-4 mt-1 text-sm">
             {activeCerts.length
               ? `${activeCerts.length} cert${activeCerts.length > 1 ? 's' : ''} in progress · ${totalQuizzes} quizzes taken`
               : 'Select certifications below to start tracking your progress'}
@@ -109,7 +109,7 @@ export default function Home() {
       {/* Active certs quick-access */}
       {activeCerts.length > 0 && (
         <div>
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Currently Studying</h2>
+          <h2 className="text-sm font-semibold text-ink-4 uppercase tracking-wider mb-3">Currently Studying</h2>
           <div className="flex gap-2 flex-wrap">
             {activeCerts.map((id) => {
               const cert = getCert(id)
@@ -132,7 +132,7 @@ export default function Home() {
           <div key={pathway.id}>
             <div className="mb-4">
               <h2 className="text-lg font-semibold">{pathway.label}</h2>
-              <p className="text-xs text-slate-500">{pathway.description}</p>
+              <p className="text-xs text-ink-5">{pathway.description}</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {pathwayCerts.map((cert) => <CertCard key={cert.id} cert={cert} />)}
@@ -145,12 +145,12 @@ export default function Home() {
       <Leaderboard certId={null} />
 
       {!user && (
-        <div className="card border-slate-600 text-center">
-          <p className="text-sm text-slate-300 mb-2">
-            <Link to="/register" className="text-blue-400 font-semibold hover:underline">Create a free account</Link>
+        <div className="card border-line-3 text-center">
+          <p className="text-sm text-ink-3 mb-2">
+            <Link to="/register" className="text-blue-700 dark:text-blue-400 font-semibold hover:underline">Create a free account</Link>
             {' '}to sync progress across all certifications and see your friends' scores.
           </p>
-          <p className="text-xs text-slate-500">Progress saves locally without an account.</p>
+          <p className="text-xs text-ink-5">Progress saves locally without an account.</p>
         </div>
       )}
     </div>

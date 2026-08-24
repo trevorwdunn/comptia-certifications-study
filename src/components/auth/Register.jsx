@@ -31,35 +31,35 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-orange-500 rounded-2xl text-xl font-bold mb-4">CT</div>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-orange-500 rounded-2xl text-xl font-bold text-white mb-4">CT</div>
           <h1 className="text-2xl font-bold">Create account</h1>
-          <p className="text-slate-400 text-sm mt-1">Save and share progress across all certifications</p>
+          <p className="text-ink-4 text-sm mt-1">Save and share progress across all certifications</p>
         </div>
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="register-email" className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label htmlFor="register-email" className="block text-sm font-medium text-ink-3 mb-1.5">Email</label>
               <input id="register-email" name="email" type="email" className="input" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus autoComplete="username" />
             </div>
             <div>
-              <label htmlFor="register-username" className="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+              <label htmlFor="register-username" className="block text-sm font-medium text-ink-3 mb-1.5">Username</label>
               <input id="register-username" name="username" type="text" className="input" placeholder="how you'll show up on the leaderboard" value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="nickname" maxLength={20} />
-              <p className="text-xs text-slate-500 mt-1">Lowercase letters, numbers and underscores. Others find you by this — never your email.</p>
+              <p className="text-xs text-ink-5 mt-1">Lowercase letters, numbers and underscores. Others find you by this — never your email.</p>
             </div>
             <div>
-              <label htmlFor="register-password" className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <label htmlFor="register-password" className="block text-sm font-medium text-ink-3 mb-1.5">Password</label>
               <input id="register-password" name="password" type="password" className="input" placeholder="Min. 8 characters" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="new-password" />
             </div>
             <div>
-              <label htmlFor="register-confirm" className="block text-sm font-medium text-slate-300 mb-1.5">Confirm Password</label>
+              <label htmlFor="register-confirm" className="block text-sm font-medium text-ink-3 mb-1.5">Confirm Password</label>
               <input id="register-confirm" name="confirm-password" type="password" className="input" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required autoComplete="new-password" />
             </div>
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-red-700 dark:text-red-400 text-sm">{error}</p>}
             <button type="submit" className="btn-primary w-full" disabled={loading}>{loading ? 'Creating account…' : 'Create account'}</button>
           </form>
         </div>
-        <p className="text-center text-sm text-slate-500 mt-4">
-          Already have an account? <Link to="/login" className="text-blue-400 hover:underline">Sign in</Link>
+        <p className="text-center text-sm text-ink-5 mt-4">
+          Already have an account? <Link to="/login" className="text-blue-700 dark:text-blue-400 hover:underline">Sign in</Link>
         </p>
       </div>
     </div>
