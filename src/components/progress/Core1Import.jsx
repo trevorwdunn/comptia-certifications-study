@@ -42,11 +42,11 @@ export default function Core1Import({ certId, domains }) {
       >
         <span>
           <span className="font-medium text-sm">Import from Core 1 Bench</span>
-          <span className="block text-xs text-slate-500 mt-0.5">
+          <span className="block text-xs text-ink-5 mt-0.5">
             Paste the progress code from the standalone Core 1 practice exam
           </span>
         </span>
-        <span className="text-slate-500 text-xs shrink-0">{open ? '▲' : '▼'}</span>
+        <span className="text-ink-5 text-xs shrink-0">{open ? '▲' : '▼'}</span>
       </button>
 
       {open && (
@@ -57,23 +57,23 @@ export default function Core1Import({ certId, domains }) {
             rows={3}
             spellCheck={false}
             placeholder="A1.0.0.…"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs font-mono break-all focus:outline-none focus:border-slate-500"
+            className="w-full bg-field border border-line-2 rounded-lg p-3 text-xs font-mono break-all focus:outline-none focus:border-line-4"
           />
           <div className="flex items-center gap-3">
             <button onClick={run} disabled={busy || !code.trim()} className="btn-ghost text-sm disabled:opacity-40">
               {busy ? 'Importing…' : 'Import'}
             </button>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-ink-5">
               Adds one attempt per domain. It won't overwrite what you already have.
             </p>
           </div>
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
 
           {result && (
-            <div className="text-sm text-emerald-400">
+            <div className="text-sm text-emerald-700 dark:text-emerald-400">
               <p className="mb-1">Imported:</p>
-              <ul className="text-xs text-slate-300 space-y-0.5">
+              <ul className="text-xs text-ink-3 space-y-0.5">
                 {Object.entries(result).map(([d, r]) => (
                   <li key={d}>
                     {domains.find((x) => x.id === Number(d))?.name || `Domain ${d}`} — {r.correct}/{r.total} correct

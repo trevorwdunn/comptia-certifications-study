@@ -5,6 +5,7 @@ import { domains as aPlusDomains } from '../data/a-plus/domains'
 import Core1Import from './progress/Core1Import'
 import Avatar from './Avatar'
 import MyCertifications from './MyCertifications'
+import ThemeToggle from './ThemeToggle'
 
 function UsernameEditor() {
   const { user, setUsername } = useAuth()
@@ -25,7 +26,7 @@ function UsernameEditor() {
 
   return (
     <form onSubmit={save} className="card space-y-2">
-      <label htmlFor="account-username" className="block text-sm font-medium text-slate-300">Username</label>
+      <label htmlFor="account-username" className="block text-sm font-medium text-ink-3">Username</label>
       <div className="flex gap-2">
         <input
           id="account-username"
@@ -39,9 +40,9 @@ function UsernameEditor() {
           {status === 'saving' ? 'Saving…' : 'Save'}
         </button>
       </div>
-      {status === 'saved' && <p className="text-emerald-400 text-xs">Username updated.</p>}
-      {status && status !== 'saving' && status !== 'saved' && <p className="text-red-400 text-xs">{status}</p>}
-      <p className="text-xs text-slate-500">
+      {status === 'saved' && <p className="text-emerald-700 dark:text-emerald-400 text-xs">Username updated.</p>}
+      {status && status !== 'saving' && status !== 'saved' && <p className="text-red-700 dark:text-red-400 text-xs">{status}</p>}
+      <p className="text-xs text-ink-5">
         This is the only name other people see — your email is never shown to them.
       </p>
     </form>
@@ -58,14 +59,14 @@ export default function Account() {
     <div className="space-y-6 max-w-lg">
       <div>
         <h1 className="text-2xl font-bold">Account</h1>
-        <p className="text-slate-400 text-sm mt-1">Manage your profile and import prior progress.</p>
+        <p className="text-ink-4 text-sm mt-1">Manage your profile and import prior progress.</p>
       </div>
 
       <div className="card flex items-center gap-3">
         <Avatar email={user.email} name={displayNameOf(user)} size={48} />
         <div className="min-w-0">
           <div className="font-semibold truncate">{displayNameOf(user)}</div>
-          <div className="text-xs text-slate-500 truncate">{user.email}</div>
+          <div className="text-xs text-ink-5 truncate">{user.email}</div>
         </div>
       </div>
 
@@ -73,8 +74,16 @@ export default function Account() {
 
       <div className="card flex items-center justify-between gap-3">
         <div className="min-w-0">
+          <div className="font-semibold text-sm">Appearance</div>
+          <div className="text-xs text-ink-5">Light, dark, or whatever your device is set to.</div>
+        </div>
+        <div className="shrink-0"><ThemeToggle /></div>
+      </div>
+
+      <div className="card flex items-center justify-between gap-3">
+        <div className="min-w-0">
           <div className="font-semibold text-sm">Friends</div>
-          <div className="text-xs text-slate-500">Compare progress with people you add.</div>
+          <div className="text-xs text-ink-5">Compare progress with people you add.</div>
         </div>
         <Link to="/friends" className="btn-secondary text-sm shrink-0">
           Manage{user.pendingRequests ? ` (${user.pendingRequests})` : ''}
@@ -98,7 +107,7 @@ export default function Account() {
       </div>
 
       <p className="text-center text-sm">
-        <Link to="/" className="text-slate-400 hover:text-white">&larr; Back to dashboard</Link>
+        <Link to="/" className="text-ink-4 hover:text-ink">&larr; Back to dashboard</Link>
       </p>
     </div>
   )

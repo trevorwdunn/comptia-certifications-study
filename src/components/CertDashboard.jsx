@@ -15,7 +15,7 @@ export default function CertDashboard() {
   const { user } = useAuth()
 
   if (cert && !data) return <Loading />
-  if (!cert || !data) return <div className="text-slate-400">Certification not found.</div>
+  if (!cert || !data) return <div className="text-ink-4">Certification not found.</div>
 
   const c = CERT_COLORS[cert.color]
   const isActive = activeCerts.includes(certId)
@@ -54,17 +54,17 @@ export default function CertDashboard() {
             <h1 className="text-xl sm:text-2xl font-bold">{cert.fullName}</h1>
             {/* Not every entry is scored out of 900 — CASP+ is pass/fail and 3CX is
                 vendor training, so both carry a null passingScore. */}
-            <p className="text-slate-400 text-sm">
+            <p className="text-ink-4 text-sm">
               {cert.code}{cert.passingScore ? ` · Passing score: ${cert.passingScore}/900` : ''}
             </p>
-            {cert.note && <p className="text-xs text-amber-400/80 mt-1">⚠ {cert.note}</p>}
+            {cert.note && <p className="text-xs text-amber-700/80 dark:text-amber-400/80 mt-1">⚠ {cert.note}</p>}
           </div>
         </div>
         <div className="flex gap-2 shrink-0 self-start">
           <button
             onClick={() => toggleActiveCert(certId)}
             className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
-              isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-slate-600 text-slate-500 hover:border-slate-400'
+              isActive ? `${c.border} ${c.text} ${c.dim}` : 'border-line-3 text-ink-5 hover:border-line-5'
             }`}
           >
             {isActive ? '● Studying' : '+ Study this cert'}
@@ -72,7 +72,7 @@ export default function CertDashboard() {
           <button
             onClick={() => setEarned(certId, !earned)}
             className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
-              earned ? 'border-amber-500/40 text-amber-400 bg-amber-500/10' : 'border-slate-600 text-slate-500 hover:border-slate-400'
+              earned ? 'border-amber-500/40 text-amber-700 dark:text-amber-400 bg-amber-500/10' : 'border-line-3 text-ink-5 hover:border-line-5'
             }`}
           >
             {earned ? `🏅 Earned ${new Date(earned.earnedAt).toLocaleDateString()}` : '🏅 Mark as earned'}
@@ -90,7 +90,7 @@ export default function CertDashboard() {
         ].map(({ label, value, color }) => (
           <div key={label} className="card text-center">
             <div className={`text-2xl font-bold ${color}`}>{value}</div>
-            <div className="text-xs text-slate-500 mt-1">{label}</div>
+            <div className="text-xs text-ink-5 mt-1">{label}</div>
           </div>
         ))}
       </div>
@@ -103,7 +103,7 @@ export default function CertDashboard() {
           { to: `/${certId}/flashcards`, label: 'Flashcards',     icon: '⟐', color: c.bg },
           { to: `/${certId}/study`,      label: 'Study Guide',    icon: '≡', color: c.bg },
         ].map(({ to, label, icon, color }) => (
-          <Link key={to} to={to} className="card border-slate-700 hover:border-slate-500 transition-colors text-center">
+          <Link key={to} to={to} className="card border-line-2 hover:border-line-4 transition-colors text-center">
             <div className={`w-8 h-8 ${color} rounded-lg flex items-center justify-center mx-auto mb-2 text-white`}>{icon}</div>
             <div className="text-sm font-medium">{label}</div>
           </Link>
@@ -113,7 +113,7 @@ export default function CertDashboard() {
       {/* Domain breakdown */}
       {coreGroups.map(({ label, domains }) => (
         <div key={label || 'all'}>
-          {label && <h2 className="text-base font-semibold mb-3 text-slate-300">{label}</h2>}
+          {label && <h2 className="text-base font-semibold mb-3 text-ink-3">{label}</h2>}
           {!label && <h2 className="text-lg font-semibold mb-3">Domains</h2>}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {domains.map((d) => {
@@ -126,14 +126,14 @@ export default function CertDashboard() {
                 <div key={d.id} className={`card border ${c.border} ${c.dim}`}>
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <div className="text-xs text-slate-500 mb-0.5">Domain {d.id} · {d.percent}%</div>
+                      <div className="text-xs text-ink-5 mb-0.5">Domain {d.id} · {d.percent}%</div>
                       <div className="font-medium text-sm">{d.name}</div>
                     </div>
                     {best !== null && (
-                      <span className={`text-xs font-bold ${best >= 80 ? 'text-emerald-400' : best >= 60 ? 'text-amber-400' : 'text-red-400'}`}>{best}%</span>
+                      <span className={`text-xs font-bold ${best >= 80 ? 'text-emerald-700 dark:text-emerald-400' : best >= 60 ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{best}%</span>
                     )}
                   </div>
-                  <div className="text-xs text-slate-600 mb-3">{qCount} questions · {fcCount} cards</div>
+                  <div className="text-xs text-ink-6 mb-3">{qCount} questions · {fcCount} cards</div>
                   <div className="flex gap-2">
                     <Link to={`/${certId}/quiz/${d.id}`} className={`flex-1 text-center text-xs py-1.5 rounded-md ${c.bg} text-white font-medium`}>Quiz</Link>
                     <Link to={`/${certId}/flashcards/${d.id}`} className="flex-1 text-center text-xs py-1.5 rounded-md btn-secondary">Cards</Link>
@@ -162,15 +162,15 @@ export default function CertDashboard() {
                       ? 'Start the video track'
                       : `Up next: video ${videoStats.nextIndex + 1}`}
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
+                <div className="text-xs text-ink-5 mt-0.5">
                   {videoStats.watched} of {videoStats.total} watched · watch in order, mark as you go
                 </div>
               </div>
-              <span className={`text-sm font-bold shrink-0 ${videoStats.complete ? 'text-emerald-400' : c.text}`}>
+              <span className={`text-sm font-bold shrink-0 ${videoStats.complete ? 'text-emerald-700 dark:text-emerald-400' : c.text}`}>
                 {videoPct}%
               </span>
             </div>
-            <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-raised rounded-full overflow-hidden">
               <div className={`h-full ${c.bar} rounded-full transition-all duration-500`} style={{ width: `${videoPct}%` }} />
             </div>
           </Link>
@@ -188,13 +188,13 @@ export default function CertDashboard() {
                 href={r.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card border border-slate-700 hover:border-slate-500 transition-colors flex items-center gap-3"
+                className="card border border-line-2 hover:border-line-4 transition-colors flex items-center gap-3"
               >
-                <span className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center text-sm ${r.kind === 'video' ? 'bg-red-600/20 text-red-400' : 'bg-slate-700 text-slate-300'}`}>
+                <span className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center text-sm ${r.kind === 'video' ? 'bg-red-600/15 text-red-700 dark:bg-red-600/20 dark:text-red-400' : 'bg-raised text-ink-3'}`}>
                   {r.kind === 'video' ? '▶' : '⎘'}
                 </span>
                 <span className="text-sm font-medium min-w-0 truncate">{r.label}</span>
-                <span className="ml-auto text-slate-600 text-xs shrink-0">↗</span>
+                <span className="ml-auto text-ink-6 text-xs shrink-0">↗</span>
               </a>
             ))}
           </div>

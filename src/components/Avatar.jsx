@@ -72,7 +72,7 @@ export default function Avatar({ email, hash, name, size = 36, className = '' })
       loading="lazy"
       onError={() => setFailed(true)}
       style={box}
-      className={`rounded-full shrink-0 bg-slate-700 object-cover ${className}`}
+      className={`rounded-full shrink-0 bg-raised object-cover ${className}`}
     />
   )
 }
